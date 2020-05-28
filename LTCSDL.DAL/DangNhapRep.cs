@@ -10,7 +10,7 @@ namespace LTCSDL.DAL
     using Models;
     using System.Linq;
 
-    public class DangNhapRep : GenericRep<MyPhamContext, Dangnhap>
+    public class DangNhapRep : GenericRep<MyPhamContext, User>
     {
         #region -- Overrides --
 
@@ -19,7 +19,7 @@ namespace LTCSDL.DAL
         /// </summary>
         /// <param name="id">Primary key</param>
         /// <returns>Return the object</returns>
-        public override Dangnhap Read(int id)
+        public override User Read(int id)
         {
             var res = All.FirstOrDefault(p => p.Id == id);
             return res;
@@ -38,13 +38,13 @@ namespace LTCSDL.DAL
             return m.Id;
         }
 
-        public Dangnhap findByUserNameAndPassWord(String Username, String password) {
+        public User findByUserNameAndPassWord(String Username, String password) {
             var res = All.FirstOrDefault(p => p.Username == Username && p.Password== password);
 
             return res;
         }
 
-        public SingleRsp CreateNewUser(Dangnhap dn)
+        public SingleRsp CreateNewUser(User dn)
         {
             var res = new SingleRsp();
 
@@ -56,7 +56,7 @@ namespace LTCSDL.DAL
                     {
                         if (checkExistbyUserName(dn.Username))
                         {
-                            var t = context.Dangnhap.Add(dn);
+                            var t = context.User.Add(dn);
                             context.SaveChanges();
                             tran.Commit();
                         }
@@ -80,7 +80,7 @@ namespace LTCSDL.DAL
             return res;
         }
 
-        public SingleRsp UpdateUser(Dangnhap dn)
+        public SingleRsp UpdateUser(User dn)
         {
             var res = new SingleRsp();
 
@@ -92,7 +92,7 @@ namespace LTCSDL.DAL
                     {
                         if (!checkExistbyID(dn.Id))
                         {
-                            var t = context.Dangnhap.Update(dn);
+                            var t = context.User.Update(dn);
                             context.SaveChanges();
                             tran.Commit();
                         }
@@ -115,7 +115,7 @@ namespace LTCSDL.DAL
             return res;
         }
 
-        public SingleRsp DeleteUser(Dangnhap dn)
+        public SingleRsp DeleteUser(User dn)
         {
             var res = new SingleRsp();
 
@@ -127,7 +127,7 @@ namespace LTCSDL.DAL
                     {
                         if (!checkExistbyID(dn.Id))
                         {
-                            var t = context.Dangnhap.Remove(dn);
+                            var t = context.User.Remove(dn);
                             context.SaveChanges();
                             tran.Commit();
                         }

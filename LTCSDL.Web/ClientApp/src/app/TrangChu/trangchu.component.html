@@ -10,10 +10,6 @@
 
   <title>Shop Homepage - Start Bootstrap Template</title>
 
-
-
-
-
 </head>
 
 <body>
@@ -27,31 +23,18 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" [routerLink]="['home']">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item" [routerLink]="['counter']">
-            <a class="nav-link" >About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" [routerLink]="['fetch-data']">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li>
+          
 
           <li class="nav-item" *ngIf="!isLogin">
             <a class="nav-link" (click) = "displayloginform()" >Đăng Nhập</a>
           </li>
           
           <li class="nav-item" *ngIf="!isLogin">
-            <a class="nav-link"  >Đăng Ký</a>
+            <a class="nav-link" (click) = "displayreigisterform()" >Đăng Ký</a>
           </li>
           
           <li class="nav-item" *ngIf="isLogin">
-            <a class="nav-link"  >Xin Chào {{user.ten}}</a>
+            <a class="nav-link"  >Hello {{user.ten}}</a>
           </li>
           
           <li class="nav-item" *ngIf="isLogin" >
@@ -85,43 +68,70 @@
     </div>
   </div>
 
-  <!--Login bootstrap-->
-  <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="defaultForm-email" class="form-control validate" [(ngModel)]="formlogin.username"   >
-          <label data-error="wrong" data-success="right" for="defaultForm-email">Your User</label>
-        </div>
 
-        <div class="md-form mb-4">
-          <i class="fas fa-lock prefix grey-text"></i>
-          <input type="password" id="defaultForm-pass" class="form-control validate"  [(ngModel)]="formlogin.password" >
-          <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
-        </div>
 
+  <div class="container">
+    
+
+
+ <div class="modal fade login" id="loginModal">
+      <div class="modal-dialog login animated">
+          <div class="modal-content">
+             <div class="modal-header" style="display: block;">
+                    <button style="padding-right: 5px;padding-top: 5px;" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Login</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="box">
+                         <div class="content">
+                          <!-- <div class="error"></div> -->
+                          <div  *ngIf="alert != ''" class="alert alert-{{alert}}" role="alert">
+                              <div>{{message}}</div>
+
+                          </div>
+                            <div class="form loginBox">
+                                <form method="" action="" accept-charset="UTF-8">
+                                <input id="email" class="form-control" type="text" placeholder="Username" name="username" [(ngModel)]="formlogin.username">
+                                <input id="password" class="form-control" type="password" placeholder="Pass word" name="password" [(ngModel)]="formlogin.password" >
+                                <input class="btn btn-default btn-login" type="button" value="Login" (click) = "login()">
+                                </form>
+                            </div>
+                         </div>
+                    </div>
+                    <div class="box">
+                        <div class="content registerBox" style="display:none;">
+                         <div class="form">
+                            <form method="" html="{:multipart=>true}" data-remote="true" action="" accept-charset="UTF-8">
+                              <input id ="fullname" class="form-control" type = "text" placeholder="Full Name" name = "fullname">
+                              <input id ="email" class="form-control" type = "text" placeholder="Email" name = "email">
+                              <input id ="phonenumber" class="form-control" type = "text" placeholder="Phone Number" name = "phonenumber">
+                              <input id="username" class="form-control" type="text" placeholder="Username" name="username">
+                              <input id="password" class="form-control" type="password" placeholder="Password" name="password">
+                              <input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation">
+                              
+
+                              <input class="btn btn-default btn-register" type="button" value="Create account" name="commit">
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="forgot login-footer">
+                        <span>Looking to
+                             <a href="javascript:void(0)" (click)="showRegisterForm()" >create an account</a>
+                        ?</span>
+                    </div>
+                    <div class="forgot register-footer" style="display:none">
+                         <span>Already have an account?</span>
+                         <a href="javascript:void(0)" (click)="showLoginForm()">Login</a>
+                    </div>
+                </div>
+          </div>
       </div>
-      <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-default" (click) = "login()">Login</button>
-      </div>
-    </div>
   </div>
 </div>
-
-<div class="text-center">
-  <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm">Launch
-    Modal Login Form</a>
-</div>
-<!--End login bootstrap -->
+  
 
 
   <!-- /.container -->
@@ -133,8 +143,6 @@
     </div>
     <!-- /.container -->
   </footer>
-
- 
 
 </body>
 

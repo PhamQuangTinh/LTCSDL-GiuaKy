@@ -3,17 +3,16 @@ using System.Collections.Generic;
 
 namespace LTCSDL.DAL.Models
 {
-    public partial class Role
+    public partial class Catelog
     {
-        public Role()
+        public Catelog()
         {
-            User = new HashSet<User>();
+            Product = new HashSet<Product>();
         }
 
         public int Id { get; set; }
-        public string Code { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<User> User { get; set; }
+        public virtual ICollection<Product> Product { get; set; }
     }
 }

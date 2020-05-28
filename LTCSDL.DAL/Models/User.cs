@@ -3,8 +3,13 @@ using System.Collections.Generic;
 
 namespace LTCSDL.DAL.Models
 {
-    public partial class Dangnhap
+    public partial class User
     {
+        public User()
+        {
+            Transaction = new HashSet<Transaction>();
+        }
+
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -15,5 +20,6 @@ namespace LTCSDL.DAL.Models
         public string Sdt { get; set; }
 
         public virtual Role Role { get; set; }
+        public virtual ICollection<Transaction> Transaction { get; set; }
     }
 }

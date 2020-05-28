@@ -3,14 +3,10 @@ using LTCSDL.Common.Req;
 using LTCSDL.Common.Rsp;
 using LTCSDL.DAL;
 using LTCSDL.DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace LTCSDL.BLL
 {
-    public class DangNhapSvc : GenericSvc<DangNhapRep, Dangnhap>
+    public class DangNhapSvc : GenericSvc<DangNhapRep, User>
     {
         #region -- Overrides --
 
@@ -50,7 +46,7 @@ namespace LTCSDL.BLL
         }
 
         public SingleRsp CreateNewUser(CreateNewUserAccountReq req) {
-            Dangnhap dn = new Dangnhap();
+            User dn = new User();
             dn.Id = req.Id;
             dn.Roleid = 2;
             dn.Ho = req.Ho;
@@ -64,7 +60,7 @@ namespace LTCSDL.BLL
 
         public SingleRsp UpdateUser(CreateNewUserAccountReq req)
         {
-            Dangnhap dn = new Dangnhap();
+            User dn = new User();
             dn.Id = req.Id;
             dn.Roleid = 2;
             dn.Ho = req.Ho;
@@ -78,7 +74,7 @@ namespace LTCSDL.BLL
 
         public SingleRsp RemoveUser(CreateNewUserAccountReq req)
         {
-            Dangnhap dn = new Dangnhap();
+            User dn = new User();
             dn.Id = req.Id;
             dn.Roleid = 2;
             dn.Ho = req.Ho;

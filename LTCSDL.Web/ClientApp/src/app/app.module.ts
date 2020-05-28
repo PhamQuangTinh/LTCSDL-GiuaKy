@@ -5,21 +5,20 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
  import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './TrangChu/nav-menu/nav-menu.component';
 import { HomeComponent } from './TrangChu/home/home.component';
-import { FetchDataComponent } from './TrangChu/fetch-data/fetch-data.component';
 import {TrangChuComponent} from './TrangChu/trangchu.component';
-import { CounterComponent } from './TrangChu/counter/counter.component';
+import { SanPhamComponent } from './TrangChu/sanpham/sanpham.component';
+import { LoginComponent } from './TrangChu/login/login.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
     HomeComponent,
-    CounterComponent,
     TrangChuComponent,
-    FetchDataComponent,
+    SanPhamComponent,
+    LoginComponent
     
   ],
   imports: [
@@ -28,10 +27,9 @@ import { CounterComponent } from './TrangChu/counter/counter.component';
     FormsModule,
     RouterModule.forRoot([
       { path: 'trangchu', component: TrangChuComponent, children: [
-        { path: 'counter', component: CounterComponent },
-        { path: 'FetchDataComponent', component: CounterComponent },
-        { path: 'fetch-data', component: FetchDataComponent },
         { path: 'home', component: HomeComponent },
+        { path: 'thongtinsanpham',component: SanPhamComponent},
+        { path: 'login', component: LoginComponent},
         { path: '', redirectTo: 'home', pathMatch: 'full' },
 
       ]},
