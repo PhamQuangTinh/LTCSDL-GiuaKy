@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { LoginComponent } from './login/login.component';
 declare var $: any;
 
 
@@ -26,8 +27,17 @@ export class TrangChuComponent {
     username: "",
     password: "",
     roleid: 0,
+    accessToken: "",
+    refreshToken: "",
     ho: "",
     ten: "",
+    email: "",
+    sdt: "",
+    role: null,
+    refreshTokenNavigation: [
+      
+    ],
+    transaction: []
   }
 
   formlogin: any = {
@@ -50,6 +60,8 @@ export class TrangChuComponent {
   }
 
   showLoginForm() {
+    this.alert = "";
+    this.message = "";
     $('#loginModal .registerBox').fadeOut('fast', function () {
       $('.loginBox').fadeIn('fast');
       $('.register-footer').fadeOut('fast', function () {
@@ -61,6 +73,8 @@ export class TrangChuComponent {
     // $('.error').removeClass('alert alert-danger').html('');
   }
   showRegisterForm() {
+    this.alert = ""
+    this.message = ""
     $('.loginBox').fadeOut('fast', function () {
       $('.registerBox').fadeIn('fast');
       $('.login-footer').fadeOut('fast', function () {
@@ -101,27 +115,31 @@ export class TrangChuComponent {
   login() {
     var x = this.formlogin;
     if (x.username == "") {
+      this.isLogin = false;
       this.loginAjax();
       this.resetLogin();
       this.alert = "warning";
       this.message = "Bạn chưa nhập thông tin tài khoản"
     }
     else if (x.password == "") {
+      this.isLogin = false;
       this.loginAjax();
       this.resetLogin();
       this.alert = "warning";
       this.message = "Bạn chưa nhập thông tin mật khẩu"
     }
     else {
-      this.http.post('http://localhost:50809/' + 'api/DangNhap/get-by-userName', x).subscribe(
+      this.http.post('https://localhost:44372/' + 'api/DangNhap/get-by-userName', x).subscribe(
         result => {
           var res: any = result;
           if (res.data != null) {
-            this.user = res.data;
             this.isLogin = true;
+            this.user = res.data;  
+            console.log(this.user);
             $('#loginModal').modal('hide');
             this.resetLogin();
           } else {
+            this.isLogin = false;
             this.loginAjax();
             this.alert = "danger";
             this.message = "Tài Khoản hoặc mật khẩu không đúng"

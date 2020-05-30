@@ -21,10 +21,10 @@ C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.DAL\bin\Debug\netcoreapp3.1\LTCSDL.DAL.
 C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.DAL\bin\Debug\netcoreapp3.1\LTCSDL.Common.dll
 C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.DAL\bin\Debug\netcoreapp3.1\LTCSDL.Common.pdb
 C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.DAL\obj\Debug\netcoreapp3.1\LTCSDL.DAL.csprojAssemblyReference.cache
-C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.DAL\obj\Debug\netcoreapp3.1\LTCSDL.DAL.csproj.CoreCompileInputs.cache
 C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.DAL\obj\Debug\netcoreapp3.1\LTCSDL.DAL.AssemblyInfoInputs.cache
 C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.DAL\obj\Debug\netcoreapp3.1\LTCSDL.DAL.AssemblyInfo.cs
 C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.DAL\obj\Debug\netcoreapp3.1\LTCSDL.DAL.csproj.CopyComplete
 C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.DAL\obj\Debug\netcoreapp3.1\LTCSDL.DAL.dll
 C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.DAL\obj\Debug\netcoreapp3.1\LTCSDL.DAL.pdb
 C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.DAL\obj\Debug\netcoreapp3.1\LTCSDL.DAL.genruntimeconfig.cache
+C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.DAL\obj\Debug\netcoreapp3.1\LTCSDL.DAL.csproj.CoreCompileInputs.cache

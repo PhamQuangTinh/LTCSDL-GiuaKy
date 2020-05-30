@@ -3,13 +3,13 @@ using LTCSDL.Common.Req;
 using LTCSDL.Common.Rsp;
 using LTCSDL.DAL;
 using LTCSDL.DAL.Models;
+using Microsoft.Extensions.Options;
 
 namespace LTCSDL.BLL
 {
     public class DangNhapSvc : GenericSvc<DangNhapRep, User>
     {
         #region -- Overrides --
-
         /// <summary>
         /// Read single object
         /// </summary>
@@ -34,15 +34,14 @@ namespace LTCSDL.BLL
             return res;
         }
 
-        public SingleRsp findByUserNameAndPassWord(LoginReq req) {
-            var res = new SingleRsp();
+        public User findByUserNameAndPassWord(LoginReq req) {
+            
             var user = req.Username;
             var pass  = req.Password;
             var lg = _rep.findByUserNameAndPassWord(user, pass);
-            res.Data = lg;
+            
 
-     
-            return res;
+            return lg;
         }
 
         public SingleRsp CreateNewUser(CreateNewUserAccountReq req) {

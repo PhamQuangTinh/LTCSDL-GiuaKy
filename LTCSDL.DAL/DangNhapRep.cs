@@ -38,8 +38,9 @@ namespace LTCSDL.DAL
             return m.Id;
         }
 
-        public User findByUserNameAndPassWord(String Username, String password) {
-            var res = All.FirstOrDefault(p => p.Username == Username && p.Password== password);
+        public User findByUserNameAndPassWord(String Username, String password)
+        {
+            var res = All.FirstOrDefault(p => p.Username == Username && p.Password == password);
 
             return res;
         }
@@ -63,12 +64,13 @@ namespace LTCSDL.DAL
                         else
                         {
                             res.SetMessage("Exist User");
-                         
+
                             tran.Rollback();
                         }
-                        
 
-                    }catch(Exception e)
+
+                    }
+                    catch (Exception e)
                     {
                         tran.Rollback();
                         res.SetError(e.StackTrace);
@@ -131,12 +133,13 @@ namespace LTCSDL.DAL
                             context.SaveChanges();
                             tran.Commit();
                         }
-                        else {
+                        else
+                        {
 
                             res.SetMessage("No User Match");
                             tran.Rollback();
                         }
-                            
+
 
                     }
                     catch (Exception e)
@@ -154,9 +157,11 @@ namespace LTCSDL.DAL
 
 
 
-        public Boolean checkExistbyUserName(String username) {
+        public Boolean checkExistbyUserName(String username)
+        {
             var id = All.FirstOrDefault(p => p.Username == username);
-            if (id == null) {
+            if (id == null)
+            {
                 return true;
             }
             return false;
@@ -173,7 +178,7 @@ namespace LTCSDL.DAL
         }
 
 
-       
+
         #endregion
 
 
