@@ -14,5 +14,11 @@ namespace LTCSDL.DAL
             var res = All.FirstOrDefault(p => p.Id == id);
             return res;
         }
+
+        public List<Product> findAll() {
+            List<Product> res = null;
+            res = All.Select(x => x).ToList();
+            return res;
+        }
     }
 }

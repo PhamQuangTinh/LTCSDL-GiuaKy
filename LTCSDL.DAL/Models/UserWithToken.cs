@@ -15,7 +15,6 @@ namespace LTCSDL.DAL.Models
             this.Email = user.Email;
             this.Sdt = user.Sdt;
             this.Role = user.Role;
-            this.RefreshTokenNavigation = user.RefreshTokenNavigation;
         }
 
     }

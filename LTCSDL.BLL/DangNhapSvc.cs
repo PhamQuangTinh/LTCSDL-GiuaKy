@@ -39,8 +39,6 @@ namespace LTCSDL.BLL
             var user = req.Username;
             var pass  = req.Password;
             var lg = _rep.findByUserNameAndPassWord(user, pass);
-            
-
             return lg;
         }
 

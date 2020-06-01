@@ -7,8 +7,10 @@ using System.Text;
 namespace LTCSDL.DAL
 {
     using LTCSDL.Common.Rsp;
+    using Microsoft.EntityFrameworkCore.Internal;
     using Models;
     using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
 
     public class DangNhapRep : GenericRep<MyPhamContext, User>
     {
@@ -38,13 +40,38 @@ namespace LTCSDL.DAL
             return m.Id;
         }
 
-        public User findByUserNameAndPassWord(String Username, String password)
+        public User findByUserNameAndPassWord(String username, String password)
         {
-            var res = All.FirstOrDefault(p => p.Username == Username && p.Password == password);
-
-            return res;
+            /*var context = new MyPhamContext();
+            var res = from s in Context.User
+                      join r in Context.Role on s.Roleid equals r.Id
+                      where s.Username == Username && s.Password == password
+                      select s;
+            
+            return res.FirstOrDefault();*/
+            var res = Context.User.Join(Context.Role, a => a.Roleid, b => b.Id, (a, b) => new
+            {
+                a,
+                b,
+            }).Where(x => x.a.Username == username && x.a.Password == password).
+            Select(x => new User { 
+                Id = x.a.Id,
+                Username = x.a.Username,
+                Password = x.a.Password,
+                Ho = x.a.Ho,
+                Ten = x.a.Ten,
+                Email = x.a.Email,
+                Sdt = x.a.Sdt,
+                AccessToken = x.a.AccessToken,
+                Roleid = x.a.Roleid,
+                Role = x.b,
+                Transaction = x.a.Transaction
+            });
+            return res.FirstOrDefault();
+            
         }
 
+        
         public SingleRsp CreateNewUser(User dn)
         {
             var res = new SingleRsp();
@@ -157,7 +184,7 @@ namespace LTCSDL.DAL
 
 
 
-        public Boolean checkExistbyUserName(String username)
+        private Boolean checkExistbyUserName(String username)
         {
             var id = All.FirstOrDefault(p => p.Username == username);
             if (id == null)
@@ -167,7 +194,7 @@ namespace LTCSDL.DAL
             return false;
         }
 
-        public Boolean checkExistbyID(int Id)
+        private Boolean checkExistbyID(int Id)
         {
             var id = All.FirstOrDefault(p => p.Id == Id);
             if (id == null)
@@ -177,7 +204,10 @@ namespace LTCSDL.DAL
             return false;
         }
 
-
+        private Role GetRoleById(int Id) {
+            var res = Context.Role.FirstOrDefault(p => p.Id == Id);
+            return res;
+        }
 
         #endregion
 

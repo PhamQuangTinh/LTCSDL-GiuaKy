@@ -50,13 +50,14 @@ namespace LTCSDL.Web.Controllers
 
             if (user != null)
             {
-                RefreshToken refreshToken = GenerateRefreshToken();
-                user.RefreshTokenNavigation.Add(refreshToken);
-                _context.RefreshToken.Add(refreshToken);
-                _context.SaveChangesAsync();
+/*                RefreshToken refreshToken = GenerateRefreshToken();
+*//*                user.RefreshTokenNavigation.Add(refreshToken);
+*//*                _context.RefreshToken.Add(refreshToken);
+*/                _context.SaveChangesAsync();
 
                 /*userWithToken = new UserWithToken(user);*/
-                user.RefreshToken = refreshToken.Token;
+/*                user.RefreshToken = refreshToken.Token;
+*/                user.AccessToken = GenerateAccessToken(user);
             }
             else {
                 res.SetMessage("Invalid Username or Password");
@@ -72,8 +73,7 @@ namespace LTCSDL.Web.Controllers
             }*/
 
             //sign your token here here..
-            user.AccessToken = GenerateAccessToken(user);
-            res.Data = user.AccessToken;
+            res.Data = user;
             return Ok(res);
         }
 
@@ -96,6 +96,7 @@ namespace LTCSDL.Web.Controllers
         }
 
         [HttpPost("remove-user")]
+
         public IActionResult deleteUserName([FromBody] CreateNewUserAccountReq req)
         {
             var res = new SingleRsp();
@@ -103,26 +104,26 @@ namespace LTCSDL.Web.Controllers
             return Ok(res);
         }
 
-        [HttpPost("RefreshToken")]
+        /*[HttpPost("RefreshToken")]
         public async Task<ActionResult<User>> RefreshToken([FromBody] RefreshRequest refreshRequest)
         {
             User user = await GetUserFromAccessToken(refreshRequest.AccessToken);
 
             if (user != null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
             {
-                /*UserWithToken userWithToken = new UserWithToken(user);*/
+                *//*UserWithToken userWithToken = new UserWithToken(user);*//*
                 user.AccessToken = GenerateAccessToken(user);
 
                 return user;
             }
 
             return null;
-        }
+        }*/
 
         
 
 
-        private bool ValidateRefreshToken(User user, string refreshToken)
+       /* private bool ValidateRefreshToken(User user, string refreshToken)
         {
 
             RefreshToken refreshTokenUser = _context.RefreshToken.Where(rt => rt.Token == refreshToken)
@@ -136,8 +137,8 @@ namespace LTCSDL.Web.Controllers
             }
 
             return false;
-        }
-        private RefreshToken GenerateRefreshToken()
+        }*/
+        /*private RefreshToken GenerateRefreshToken()
         {
             RefreshToken refreshToken = new RefreshToken();
 
@@ -147,10 +148,10 @@ namespace LTCSDL.Web.Controllers
                 rng.GetBytes(randomNumber);
                 refreshToken.Token = Convert.ToBase64String(randomNumber);
             }
-            refreshToken.ExpiryDate = DateTime.UtcNow.AddMonths(6);
+            refreshToken.ExpiryDate = DateTime.UtcNow.AddDays(1);
 
             return refreshToken;
-        }
+        }*/
 
         //Chuyển respone sang token
         private string GenerateAccessToken(User user)
@@ -163,9 +164,8 @@ namespace LTCSDL.Web.Controllers
                 {
                     //Mã hóa thông tin
                     new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Id)),
-                    new Claim(ClaimTypes.Surname, Convert.ToString(user.Ho)),
-                    new Claim (ClaimTypes.GivenName, Convert.ToString(user.Ten)),
-                    new Claim(ClaimTypes.Role, Convert.ToString(user.Roleid)),                    
+                    new Claim(ClaimTypes.Role, Convert.ToString(user.Role.Code)),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(60),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
@@ -199,8 +199,8 @@ namespace LTCSDL.Web.Controllers
                 if (jwtSecurityToken != null && jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
                 {
                     var userId = principle.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                    var roleID = principle.FindFirst(ClaimTypes.Role)?.Value;
 
-                    
                 }
             }
             catch (Exception)

@@ -2,14 +2,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
- import { RouterModule } from '@angular/router';
+ import { RouterModule} from '@angular/router';
+ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './TrangChu/home/home.component';
 import {TrangChuComponent} from './TrangChu/trangchu.component';
 import { SanPhamComponent } from './TrangChu/sanpham/sanpham.component';
-import { LoginComponent } from './TrangChu/login/login.component';
-
+import { AuthGuard } from './helpers/auth.guard';
+import { UserService } from './services/user.service';
+import { AuthInterceptor } from './helpers/auth.interceptor';
+import {DatHangComponent} from './TrangChu/dathang/dathang.component';
+import {AdminComponent} from './admin/admin.component';
+import {NewProductComponent} from './admin/new-product/new-product.component'
+import {AuthAdminGuard} from './helpers/auth-admin.guard'
 
 
 @NgModule({
@@ -18,7 +24,10 @@ import { LoginComponent } from './TrangChu/login/login.component';
     HomeComponent,
     TrangChuComponent,
     SanPhamComponent,
-    LoginComponent
+    DatHangComponent,
+    AdminComponent,
+    NewProductComponent
+    
     
   ],
   imports: [
@@ -28,17 +37,36 @@ import { LoginComponent } from './TrangChu/login/login.component';
     RouterModule.forRoot([
       { path: 'trangchu', component: TrangChuComponent, children: [
         { path: 'home', component: HomeComponent },
-        { path: 'thongtinsanpham',component: SanPhamComponent},
-        { path: 'login', component: LoginComponent},
+        { path: 'thongtinsanpham',component: SanPhamComponent,},
+        { path: 'dathang', component: DatHangComponent, canActivate:[AuthGuard]},
         { path: '', redirectTo: 'home', pathMatch: 'full' },
 
       ]},
 
+      {
+        path: 'admin', component: AdminComponent, canActivate:[AuthAdminGuard], children:[
+          {path:'new-product', component: NewProductComponent},
+          
+        ]
+      },
+
       
       { path: '', redirectTo: 'trangchu', pathMatch: 'full' },
-    ])
+    ], {useHash: true})
   ],
-  providers: [],
+  providers: [
+    // UserService,]
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy, 
+    },
+
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

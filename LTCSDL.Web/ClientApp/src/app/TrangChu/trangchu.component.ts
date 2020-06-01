@@ -1,10 +1,8 @@
-import { Component, Inject, NgModule } from '@angular/core';
+import { Component,OnInit, Inject, NgModule } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import {TokenStorageService} from '../services/token-storage.service'
 declare var $: any;
 
 
@@ -17,10 +15,11 @@ declare var $: any;
 })
 
 
-export class TrangChuComponent {
+export class TrangChuComponent implements OnInit {
   isLogin: boolean = false;
   alert: any = "";
   message: any = "";
+  Roles: "";
 
   user: any = {
     id: 0,
@@ -33,10 +32,7 @@ export class TrangChuComponent {
     ten: "",
     email: "",
     sdt: "",
-    role: null,
-    refreshTokenNavigation: [
-      
-    ],
+    role: [],
     transaction: []
   }
 
@@ -45,11 +41,39 @@ export class TrangChuComponent {
     password: "",
   }
 
+ 
+
   constructor(
-    private http: HttpClient, @Inject('BASE_URL') baseUrl: string
+    private http: HttpClient, @Inject('BASE_URL') baseUrl: string,
+    private authService: AuthService,
+    private tokenStorage: TokenStorageService,
+    private router: Router
   ) {
 
   }
+  // ngOnInit() {
+  //   this.isLogin = !!this.tokenStorageService.getToken();
+
+  //   if (this.isLogin) {
+  //     const user = this.tokenStorageService.getUser();
+  //     this.roles = user.roles;
+
+  //     this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+  //     this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
+
+  //     this.username = user.username;
+  //   }
+  // }
+  ngOnInit() {
+    if (this.tokenStorage.getToken()) {
+      this.isLogin = true;
+      this.user = this.tokenStorage.getUser();
+
+      this.Roles = this.tokenStorage.getUser().role.code;
+    
+    }
+  }
+
 
   //Bat giao dien login
   displayloginform() {
@@ -72,6 +96,8 @@ export class TrangChuComponent {
     });
     // $('.error').removeClass('alert alert-danger').html('');
   }
+
+
   showRegisterForm() {
     this.alert = ""
     this.message = ""
@@ -85,6 +111,8 @@ export class TrangChuComponent {
     // $('.error').removeClass('alert alert-danger').html('');
 
   }
+
+  
   loginAjax() {
     this.shakeModal();
 
@@ -111,10 +139,22 @@ export class TrangChuComponent {
     this.formlogin.password = "";
   }
 
+  reloadPage() {
+    window.location.reload();
+  }
+
   //khi click login tren giao dien login
   login() {
     var x = this.formlogin;
     if (x.username == "") {
+      if (typeof(Storage) !== 'undefined') {
+        //Nếu có hỗ trợ
+        //Thực hiện thao tác với Storage
+        alert('Trình duyệt của bạn hỗ trợ Storage');
+    } else {
+        //Nếu không hỗ trợ
+        alert('Trình duyệt của bạn không hỗ trợ Storage');
+    }
       this.isLogin = false;
       this.loginAjax();
       this.resetLogin();
@@ -129,13 +169,19 @@ export class TrangChuComponent {
       this.message = "Bạn chưa nhập thông tin mật khẩu"
     }
     else {
-      this.http.post('https://localhost:44372/' + 'api/DangNhap/get-by-userName', x).subscribe(
+      this.authService.login(x).subscribe(
         result => {
           var res: any = result;
+          //Login success
           if (res.data != null) {
             this.isLogin = true;
-            this.user = res.data;  
-            console.log(this.user);
+            this.user = res.data; 
+            this.tokenStorage.saveUser(res.data)
+            //Lưu token
+            this.tokenStorage.saveToken(res.data.accessToken);
+            this.tokenStorage.saveRole(res.data.role.code);
+            console.log(this.tokenStorage.getRole());
+
             $('#loginModal').modal('hide');
             this.resetLogin();
           } else {
@@ -151,12 +197,16 @@ export class TrangChuComponent {
           alert(error);
         }
       );
-
     }
-
-
+    
 
   }
+  logout(){
+    this.tokenStorage.signOut();
+    this.isLogin = false;
+    this.router.navigate(['/trangchu/home']);
+  }
+
 
 
 

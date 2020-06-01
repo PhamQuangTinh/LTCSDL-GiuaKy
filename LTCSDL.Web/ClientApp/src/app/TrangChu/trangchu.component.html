@@ -26,19 +26,19 @@
           
 
           <li class="nav-item" *ngIf="!isLogin">
-            <a class="nav-link" (click) = "displayloginform()" >Đăng Nhập</a>
+            <a class="nav-link" type="button" (click) = "displayloginform()" >Đăng Nhập</a>
           </li>
           
           <li class="nav-item" *ngIf="!isLogin">
-            <a class="nav-link" (click) = "displayreigisterform()" >Đăng Ký</a>
+            <a class="nav-link" type="button" (click) = "displayreigisterform()" >Đăng Ký</a>
           </li>
           
           <li class="nav-item" *ngIf="isLogin">
-            <a class="nav-link"  >Hello {{user.ten}}</a>
+            <a class="nav-link" type="button"  >Hello {{user.ten}}</a>
           </li>
           
           <li class="nav-item" *ngIf="isLogin" >
-            <a class="nav-link"  >Thoát</a>
+            <a class="nav-link" type="button" (click) = "logout()" >Thoát</a>
           </li>
           
         </ul>

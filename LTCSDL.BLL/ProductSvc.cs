@@ -17,5 +17,14 @@ namespace LTCSDL.BLL
 
             return res;
         }
+
+        public SingleRsp findAll() {
+            var res = new SingleRsp();
+
+            var m = _rep.findAll();
+            res.Data = m;
+            return res;
+
+        }
     }
 }

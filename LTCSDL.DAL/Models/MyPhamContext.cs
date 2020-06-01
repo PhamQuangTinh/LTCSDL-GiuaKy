@@ -18,7 +18,6 @@ namespace LTCSDL.DAL.Models
         public virtual DbSet<Catelog> Catelog { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Product> Product { get; set; }
-        public virtual DbSet<RefreshToken> RefreshToken { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Transaction> Transaction { get; set; }
         public virtual DbSet<User> User { get; set; }
@@ -115,30 +114,6 @@ namespace LTCSDL.DAL.Models
                     .HasConstraintName("FK_product_catelog");
             });
 
-            modelBuilder.Entity<RefreshToken>(entity =>
-            {
-                entity.HasKey(e => e.TokenId);
-
-                entity.Property(e => e.TokenId).HasColumnName("token_id");
-
-                entity.Property(e => e.ExpiryDate)
-                    .HasColumnName("expiry_date")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.Token)
-                    .IsRequired()
-                    .HasColumnName("token")
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UserId).HasColumnName("user_id");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.RefreshTokenNavigation)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__RefreshTo__user___282DF8C2");
-            });
-
             modelBuilder.Entity<Role>(entity =>
             {
                 entity.ToTable("role");
@@ -208,7 +183,7 @@ namespace LTCSDL.DAL.Models
 
                 entity.Property(e => e.Email)
                     .HasColumnName("email")
-                    .HasMaxLength(20);
+                    .HasColumnType("text");
 
                 entity.Property(e => e.Ho)
                     .HasColumnName("ho")
@@ -218,10 +193,6 @@ namespace LTCSDL.DAL.Models
                     .IsRequired()
                     .HasColumnName("password")
                     .HasMaxLength(20);
-
-                entity.Property(e => e.RefreshToken)
-                    .HasColumnName("refresh_token")
-                    .HasMaxLength(200);
 
                 entity.Property(e => e.Roleid).HasColumnName("roleid");
 
