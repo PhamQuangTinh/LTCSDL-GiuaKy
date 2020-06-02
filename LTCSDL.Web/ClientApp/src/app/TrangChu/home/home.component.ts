@@ -9,8 +9,8 @@ import {  ActivatedRoute, RouteConfigLoadEnd } from '@angular/router';
 export class HomeComponent {
   id:string;
 
-  constructor(private activeRoute: ActivatedRoute ){
-    activeRoute.params.subscribe(params => {this.id = params['id']});
+  constructor( ){
+    // activeRoute.params.subscribe(params => {this.id = params['id']});
   }
   
 }

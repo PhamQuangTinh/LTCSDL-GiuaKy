@@ -52,14 +52,14 @@ import {AuthAdminGuard} from './helpers/auth-admin.guard'
 
       
       { path: '', redirectTo: 'trangchu', pathMatch: 'full' },
-    ], {useHash: true})
+    ], )
   ],
   providers: [
     // UserService,]
-    {
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy, 
-    },
+    // {
+    //   provide: LocationStrategy,
+    //   useClass: HashLocationStrategy, 
+    // },
 
     {
     provide: HTTP_INTERCEPTORS,
