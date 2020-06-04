@@ -1,8 +1,11 @@
 import { Component,OnInit, Inject, NgModule } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute,ParamMap } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import {TokenStorageService} from '../services/token-storage.service'
+import {NavigationExtras} from '@angular/router'
+import {Observable} from 'rxjs'
+import {switchMap} from 'rxjs/operators'
 declare var $: any;
 
 
@@ -16,8 +19,12 @@ declare var $: any;
 
 
 export class TrangChuComponent implements OnInit {
+
+  selectedId: number;
+  
   isLogin: boolean = false;
   alert: any = "";
+  name: string;
   message: any = "";
   Roles: "";
 
@@ -46,32 +53,21 @@ export class TrangChuComponent implements OnInit {
   constructor(
     private http: HttpClient, @Inject('BASE_URL') baseUrl: string,
     private authService: AuthService,
+    private route: ActivatedRoute,
     private tokenStorage: TokenStorageService,
     private router: Router
   ) {
 
   }
-  // ngOnInit() {
-  //   this.isLogin = !!this.tokenStorageService.getToken();
-
-  //   if (this.isLogin) {
-  //     const user = this.tokenStorageService.getUser();
-  //     this.roles = user.roles;
-
-  //     this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-  //     this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
-
-  //     this.username = user.username;
-  //   }
-  // }
+  
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
       this.isLogin = true;
       this.user = this.tokenStorage.getUser();
 
-      this.Roles = this.tokenStorage.getUser().role.code;
-    
+      this.Roles = this.tokenStorage.getUser().role.code;  
     }
+    
   }
 
 

@@ -85,10 +85,13 @@ namespace LTCSDL.DAL.Models
                     .HasColumnName("description")
                     .HasColumnType("text");
 
+                entity.Property(e => e.Discount)
+                    .HasColumnName("discount")
+                    .HasColumnType("decimal(5, 4)");
+
                 entity.Property(e => e.Price)
-                    .IsRequired()
                     .HasColumnName("price")
-                    .HasMaxLength(20);
+                    .HasColumnType("money");
 
                 entity.Property(e => e.ProductImgLink)
                     .IsRequired()
@@ -147,22 +150,7 @@ namespace LTCSDL.DAL.Models
                     .HasColumnName("time_transaction")
                     .HasColumnType("date");
 
-                entity.Property(e => e.UserEmail)
-                    .IsRequired()
-                    .HasColumnName("user_email")
-                    .HasMaxLength(20);
-
                 entity.Property(e => e.UserId).HasColumnName("user_id");
-
-                entity.Property(e => e.UserName)
-                    .IsRequired()
-                    .HasColumnName("user_name")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.UserPhone)
-                    .IsRequired()
-                    .HasColumnName("user_phone")
-                    .HasMaxLength(20);
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Transaction)

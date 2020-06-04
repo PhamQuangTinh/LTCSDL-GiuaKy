@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 
 namespace LTCSDL.Common.Req
 {
-    public class FindProductByIdReq
+    public class CategoryIdReq
     {
-        public int ProductId { get; set; }
+        public int CatelogId { get; set; }
+
     }
 }

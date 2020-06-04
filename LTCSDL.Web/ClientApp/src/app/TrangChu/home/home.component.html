@@ -1,4 +1,4 @@
-<div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+<!-- <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -123,4 +123,20 @@
     </div>
   </div>
 
+</div> -->
+
+
+
+<!-- <h3>Department List</h3>
+<ul class = "items">
+  <li (click) = "onSelect(department)" *ngFor = "let department of departments">
+    <span class = "badge">{{department.id}}</span>{{department.name}}
+  </li>
+</ul> -->
+<div *ngFor="let product of ListProduct">
+  <h1>ID: {{product.id}} </h1>
+  <h1>CategoryId: {{product.catelogId}} </h1>
+  <h1>productname: </h1>
+  <h1>price: </h1>
+  <h1>description: </h1>
 </div>

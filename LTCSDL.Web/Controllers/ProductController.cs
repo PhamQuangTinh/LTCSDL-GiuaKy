@@ -24,7 +24,7 @@ namespace LTCSDL.Web.Controllers
             _svc = new ProductSvc();
         }
         
-        [HttpPost("find-product-by-id")]
+        [HttpGet("find-product-by-id")]
         [Authorize]
         public IActionResult FindProductById([FromBody] FindProductByIdReq req)
         {
@@ -39,6 +39,66 @@ namespace LTCSDL.Web.Controllers
         {
             var res = new SingleRsp();
             res = _svc.findAll();
+            return Ok(res);
+        }
+
+        [HttpPost("create-new-product")]
+        public IActionResult CreateNewProduct([FromBody] CreateAndEditProduct req)
+        {
+            var res = new SingleRsp();
+            res = _svc.CreateNewProduct(req);
+            return Ok(res);
+        }
+
+        [HttpPost("edit-product")]
+        public IActionResult EditProduct([FromBody] CreateAndEditProduct req)
+        {
+            var res = new SingleRsp();
+            res = _svc.UpdateProduct(req);
+            return Ok(res);
+        }
+
+        [HttpPost("remove-product-by-model")]
+        public IActionResult RemoveProduct([FromBody] CreateAndEditProduct req)
+        {
+            var res = new SingleRsp();
+            res = _svc.RemoveProductByModel(req);
+            return Ok(res);
+        }
+
+        [HttpPost("remove-product-by-id")]
+        public IActionResult RemoveProductById([FromBody] ProductIDReq req)
+        {
+            var res = new SingleRsp();
+            res = _svc.RemoveProductById(req.ProductId);
+            return Ok(res);
+        }
+
+
+        [HttpPost("search-product")]
+        public IActionResult SearchProduct([FromBody]SearchProductReq req)
+        {
+            var res = new SingleRsp();
+            var m = _svc.SearchProduct(req.keyword, req.Page, req.Size);
+            res.Data = m;
+            return Ok(res );
+        }
+
+        [HttpPost("find-product-by-category")]
+        public IActionResult FindProductByCategory([FromBody]CategoryIdReq req)
+        {
+            var res = new SingleRsp();
+            var m = _svc.findProductsByCatelog(req.CatelogId);
+            res.Data = m;
+            return Ok(res);
+        }
+
+        [HttpPost("find-product-between-price")]
+        public IActionResult FindProductBetweenPrice([FromBody]PricesProductReq req)
+        {
+            var res = new SingleRsp();
+            var m = _svc.findProductBetweenPrice(req.FPrice,req.LPrice);
+            res.Data = m;
             return Ok(res);
         }
 

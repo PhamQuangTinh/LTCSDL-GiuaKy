@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace LTCSDL.DAL.Models
+namespace LTCSDL.Common.Req
 {
-    public partial class Product
+    public class CreateAndEditProduct
     {
-        public Product()
-        {
-            Order = new HashSet<Order>();
-        }
-
         public int Id { get; set; }
         public int CatelogId { get; set; }
         public string Productname { get; set; }
@@ -20,7 +16,5 @@ namespace LTCSDL.DAL.Models
         public string ProductImgLink { get; set; }
         public decimal? Discount { get; set; }
 
-        public virtual Catelog Catelog { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
     }
 }

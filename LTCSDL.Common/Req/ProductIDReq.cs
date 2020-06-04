@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LTCSDL.Common.Req
 {
-    public class FindProductByIdReq
+    public class ProductIDReq
     {
         public int ProductId { get; set; }
     }

@@ -16,6 +16,7 @@ import {DatHangComponent} from './TrangChu/dathang/dathang.component';
 import {AdminComponent} from './admin/admin.component';
 import {NewProductComponent} from './admin/new-product/new-product.component'
 import {AuthAdminGuard} from './helpers/auth-admin.guard'
+import {PageNotFoundComponent} from './pagenotfound/pagenotfound.component'
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {AuthAdminGuard} from './helpers/auth-admin.guard'
     SanPhamComponent,
     DatHangComponent,
     AdminComponent,
-    NewProductComponent
+    NewProductComponent,
+    PageNotFoundComponent,
     
     
   ],
@@ -37,9 +39,11 @@ import {AuthAdminGuard} from './helpers/auth-admin.guard'
     RouterModule.forRoot([
       { path: 'trangchu', component: TrangChuComponent, children: [
         { path: 'home', component: HomeComponent },
-        { path: 'thongtinsanpham',component: SanPhamComponent,},
+        { path: 'thongtinsanpham/:id',component: SanPhamComponent },
         { path: 'dathang', component: DatHangComponent, canActivate:[AuthGuard]},
         { path: '', redirectTo: 'home', pathMatch: 'full' },
+        { path :'**', component: PageNotFoundComponent},
+
 
       ]},
 
@@ -50,12 +54,12 @@ import {AuthAdminGuard} from './helpers/auth-admin.guard'
         ]
       },
 
-      
       { path: '', redirectTo: 'trangchu', pathMatch: 'full' },
-    ], )
+      
+    ], {enableTracing: true} )
   ],
   providers: [
-    // UserService,]
+    // UserService,
     // {
     //   provide: LocationStrategy,
     //   useClass: HashLocationStrategy, 
