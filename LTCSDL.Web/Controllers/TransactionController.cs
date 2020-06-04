@@ -25,7 +25,7 @@ namespace LTCSDL.Web.Controllers
         public IActionResult CreateNewTransaction([FromBody] NewTransactionReq req)
         {
             var res = new SingleRsp();
-            res = _svc.CreateNewTransaction(req.UserId,req.ProductId,req.Amount);
+            res = _svc.CreateNewTransaction(req.UserId, req.ProductId, req.Amount);
             return Ok(res);
         }
 
@@ -42,6 +42,23 @@ namespace LTCSDL.Web.Controllers
         {
             var res = new SingleRsp();
             res = _svc.findTransactionByTransactionId(req.TransactionId);
+            return Ok(res);
+        }
+
+        [HttpPost("remove-order-products-transaction")]
+        public IActionResult RemoveOrderProductsTransction([FromBody] RemoveOrderProductsReq req)
+        {
+            var res = new SingleRsp();
+            res = _svc.removeOrderProductsTransction(req.TransactionId, req.Proreq, req.Amount);
+            return Ok(res);
+        }
+
+
+        [HttpPost("remove-transaction")]
+        public IActionResult DeleteTransaction([FromBody] TransactionReq req)
+        {
+            var res = new SingleRsp();
+            res = _svc.DeleteTransaction(req);
             return Ok(res);
         }
 

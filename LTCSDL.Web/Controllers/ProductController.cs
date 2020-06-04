@@ -29,7 +29,7 @@ namespace LTCSDL.Web.Controllers
         public IActionResult FindProductById([FromBody] FindProductByIdReq req)
         {
             var res = new SingleRsp();
-            res = _svc.Read(req.Id);
+            res = _svc.Read(req.ProductId);
             return Ok(res);
         }
 

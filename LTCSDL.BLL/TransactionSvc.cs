@@ -37,10 +37,30 @@ namespace LTCSDL.BLL
             return res;
         }
 
+
         public SingleRsp findTransactionByTransactionId(int id)
         {
             var res = new SingleRsp();
             var m = _rep.findTransactionByTransactionId(id);
+            res.Data = m;
+            return res;
+        }
+
+        public SingleRsp DeleteTransaction(TransactionReq tranc) 
+        {
+            Transaction tran = new Transaction();
+            tran.Id = tranc.Id;
+            tran.UserId = tranc.UserId;
+            tran.Amount = tran.Amount;
+            tran.TimeTransaction = tranc.TimeTransaction;
+            return _rep.DeleteTransaction(tran);
+        }
+
+
+
+        public SingleRsp removeOrderProductsTransction(int tranId, List<ProIDvsProNumReq> array, decimal amount) {
+            var res = new SingleRsp();
+            var m = _rep.removeOrderProductsTransction(tranId,array,amount);
             res.Data = m;
             return res;
         }

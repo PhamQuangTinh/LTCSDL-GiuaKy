@@ -1,5 +1,6 @@
 ﻿using LTCSDL.Common.DAL;
 using LTCSDL.Common.Req;
+using LTCSDL.Common.Rsp;
 using LTCSDL.DAL.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -139,7 +140,7 @@ namespace LTCSDL.DAL
 
 
 
-        public object findTransactionByCustomerId(int id)
+        /*public object findTransactionByCustomerId(int id)
         {
             var data = Context.User.Join(Context.Transaction, a => a.Id, b => b.UserId, (a, b) => new
             {
@@ -158,7 +159,7 @@ namespace LTCSDL.DAL
 
 
             return null;
-        }
+        }*/
 
         public List<object> findTransactionByTransactionId(int transactionId)
         {
@@ -207,6 +208,104 @@ namespace LTCSDL.DAL
             }
             return res;
         }
+
+
+        public List<object> removeOrderProductsTransction(int tranId, List<ProIDvsProNumReq> array, decimal amount)
+        {
+            List<object> res = new List<object>();
+            DataTable myTable = CreateTable();
+            array.ForEach(a => myTable.Rows.Add(a.ProId, a.ProNum));
+            var cmn = (SqlConnection)Context.Database.GetDbConnection();
+
+            if (cmn.State == ConnectionState.Closed)
+            {
+                cmn.Open();
+            }
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+                var cmd = cmn.CreateCommand();
+                cmd.CommandText = "DeleteProductsTransaction";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@TranId", tranId);
+                cmd.Parameters.AddWithValue("@Products", myTable);
+                cmd.Parameters.AddWithValue("@amount", amount);
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        var x = new
+                        {
+                            TransactionId = row["transaction_id"],
+                        };
+
+                        res.Add(x);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                res = null;
+            }
+            return res;
+        }
+
+
+        public SingleRsp DeleteTransaction(Transaction tranc)
+        {
+            var res = new SingleRsp();
+
+            using (var context = new MyPhamContext())
+            {
+                using (var tran = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        if (!checkExistbyID(tranc.Id))
+                        {
+                            var t = context.Transaction.Remove(tranc);
+                            context.SaveChanges();
+                            tran.Commit();
+                        }
+                        else
+                        {
+
+                            res.SetMessage("No Transaction Match");
+                            tran.Rollback();
+                        }
+
+
+                    }
+                    catch (Exception e)
+                    {
+                        tran.Rollback();
+                        res.SetError(e.StackTrace);
+                    }
+                }
+
+            }
+
+            return res;
+        }
+
+        private Boolean checkExistbyID(int Id)
+        {
+            var id = All.FirstOrDefault(p => p.Id == Id);
+            if (id == null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
     }
+
+
+
 
 }
