@@ -20,8 +20,21 @@ export class HomeService {
     constructor(private http: HttpClient) { }
 
     findAllProduct() : Observable<any>{
-        return this.http.get(API_URL + 'find-all-product', httpOptions);
+        return this.http.post(API_URL + 'find-all-product', httpOptions);
     }
+
+    pagination(page, size) : Observable<any>{
+        return this.http.post(API_URL + "search-product",
+        {
+            page: page,
+            size: size,
+            id: 0,
+            type: "string",
+            keyword: ""
+        },
+        httpOptions);
+    }
+
 
     
 }

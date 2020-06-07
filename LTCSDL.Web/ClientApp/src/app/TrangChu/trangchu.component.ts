@@ -3,9 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router,ActivatedRoute,ParamMap } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import {TokenStorageService} from '../services/token-storage.service'
-import {NavigationExtras} from '@angular/router'
-import {Observable} from 'rxjs'
-import {switchMap} from 'rxjs/operators'
+
 declare var $: any;
 
 
@@ -143,14 +141,7 @@ export class TrangChuComponent implements OnInit {
   login() {
     var x = this.formlogin;
     if (x.username == "") {
-      if (typeof(Storage) !== 'undefined') {
-        //Nếu có hỗ trợ
-        //Thực hiện thao tác với Storage
-        alert('Trình duyệt của bạn hỗ trợ Storage');
-    } else {
-        //Nếu không hỗ trợ
-        alert('Trình duyệt của bạn không hỗ trợ Storage');
-    }
+      
       this.isLogin = false;
       this.loginAjax();
       this.resetLogin();
@@ -176,8 +167,6 @@ export class TrangChuComponent implements OnInit {
             //Lưu token
             this.tokenStorage.saveToken(res.data.accessToken);
             this.tokenStorage.saveRole(res.data.role.code);
-            console.log(this.tokenStorage.getRole());
-
             $('#loginModal').modal('hide');
             this.resetLogin();
           } else {
@@ -200,7 +189,7 @@ export class TrangChuComponent implements OnInit {
   logout(){
     this.tokenStorage.signOut();
     this.isLogin = false;
-    this.router.navigate(['/trangchu/home']);
+    this.router.navigate(['']);
   }
 
 

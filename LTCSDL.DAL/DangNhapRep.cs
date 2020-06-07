@@ -65,7 +65,7 @@ namespace LTCSDL.DAL
                 AccessToken = x.a.AccessToken,
                 Roleid = x.a.Roleid,
                 Role = x.b,
-                Transaction = x.a.Transaction
+
             });
             return res.FirstOrDefault();
             
@@ -82,7 +82,7 @@ namespace LTCSDL.DAL
                 {
                     try
                     {
-                        if (checkExistbyUserName(dn.Username))
+                        if (common.checkExistbyUserName(dn.Username))
                         {
                             var t = context.User.Add(dn);
                             context.SaveChanges();
@@ -119,7 +119,7 @@ namespace LTCSDL.DAL
                 {
                     try
                     {
-                        if (!checkExistbyID(dn.Id))
+                        if (!common.checkExistbyID(dn.Id))
                         {
                             var t = context.User.Update(dn);
                             context.SaveChanges();
@@ -154,7 +154,7 @@ namespace LTCSDL.DAL
                 {
                     try
                     {
-                        if (!checkExistbyID(dn.Id))
+                        if (!common.checkExistbyID(dn.Id))
                         {
                             var t = context.User.Remove(dn);
                             context.SaveChanges();
@@ -184,30 +184,9 @@ namespace LTCSDL.DAL
 
 
 
-        private Boolean checkExistbyUserName(String username)
-        {
-            var id = All.FirstOrDefault(p => p.Username == username);
-            if (id == null)
-            {
-                return true;
-            }
-            return false;
-        }
+        
 
-        private Boolean checkExistbyID(int Id)
-        {
-            var id = All.FirstOrDefault(p => p.Id == Id);
-            if (id == null)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private Role GetRoleById(int Id) {
-            var res = Context.Role.FirstOrDefault(p => p.Id == Id);
-            return res;
-        }
+        private Common common = new Common();
 
 
         #endregion

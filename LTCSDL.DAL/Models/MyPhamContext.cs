@@ -15,7 +15,9 @@ namespace LTCSDL.DAL.Models
         {
         }
 
+        public virtual DbSet<Basket> Basket { get; set; }
         public virtual DbSet<Catelog> Catelog { get; set; }
+        public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Role> Role { get; set; }
@@ -33,6 +35,31 @@ namespace LTCSDL.DAL.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Basket>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.Property(e => e.Price)
+                    .HasColumnName("price")
+                    .HasColumnType("money");
+
+                entity.Property(e => e.ProductImgLink)
+                    .IsRequired()
+                    .HasColumnName("product_img_link")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ProductInventory).HasColumnName("product_inventory");
+
+                entity.Property(e => e.Productname)
+                    .IsRequired()
+                    .HasColumnName("productname")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.Proid).HasColumnName("proid");
+
+                entity.Property(e => e.Userid).HasColumnName("userid");
+            });
+
             modelBuilder.Entity<Catelog>(entity =>
             {
                 entity.ToTable("catelog");
@@ -43,6 +70,31 @@ namespace LTCSDL.DAL.Models
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.ToTable("comment");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.CommentContent)
+                    .IsRequired()
+                    .HasColumnName("comment_content")
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.ProductId).HasColumnName("product_id");
+
+                entity.Property(e => e.TimeComment)
+                    .HasColumnName("time_comment")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.Property(e => e.UserName)
+                    .IsRequired()
+                    .HasColumnName("user_name")
+                    .HasMaxLength(20);
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -56,6 +108,8 @@ namespace LTCSDL.DAL.Models
                     .HasColumnType("text");
 
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
+
+                entity.Property(e => e.Quantity).HasColumnName("quantity");
 
                 entity.Property(e => e.TransactionId).HasColumnName("transaction_id");
 
@@ -83,11 +137,7 @@ namespace LTCSDL.DAL.Models
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasColumnName("description")
-                    .HasColumnType("text");
-
-                entity.Property(e => e.Discount)
-                    .HasColumnName("discount")
-                    .HasColumnType("decimal(5, 4)");
+                    .HasMaxLength(2000);
 
                 entity.Property(e => e.Price)
                     .HasColumnName("price")
@@ -103,12 +153,12 @@ namespace LTCSDL.DAL.Models
                 entity.Property(e => e.Productcontent)
                     .IsRequired()
                     .HasColumnName("productcontent")
-                    .HasColumnType("text");
+                    .HasMaxLength(2000);
 
                 entity.Property(e => e.Productname)
                     .IsRequired()
                     .HasColumnName("productname")
-                    .HasMaxLength(20);
+                    .HasMaxLength(200);
 
                 entity.HasOne(d => d.Catelog)
                     .WithMany(p => p.Product)

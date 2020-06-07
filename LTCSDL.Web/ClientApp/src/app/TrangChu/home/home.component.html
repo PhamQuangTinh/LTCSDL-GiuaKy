@@ -1,4 +1,4 @@
-<!-- <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -27,23 +27,41 @@
 
 <div class="row">
 
-  <div class="col-lg-4 col-md-6 mb-4">
+  <div class="col-lg-4 col-md-6 mb-4" *ngFor="let product of ListProduct">
     <div class="card h-100">
-      <a  [routerLink]="['/trangchu/thongtinsanpham']" ><img class="card-img-top" src="https://ifree.vn/wp-content/uploads/2019/08/danh-sach-cong-ty-san-xuat-my-pham-1-600x400.jpg" alt=""></a>
-      <div class="card-body">
-        <h4 class="card-title">
-          <a href="#">Item One</a>
-        </h4>
-        <h5>$24.99</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+      <div>
+        <button class = "btn btn-danger" *ngIf = "userRole == 'ADMIN'">Delete</button>
+        <button class = "btn btn-secondary" *ngIf = "userRole == 'ADMIN'">Edit</button>
+        <a  (click) = "onSelect(product)" ><img class="card-img-top" *ngIf = "product.productImgLink == ''"  src="http://placehold.it/700x400" alt=""></a>
+        <a  (click) = "onSelect(product)" ><img class="card-img-top" *ngIf = "product.productImgLink != ''"  src="{{product.productImgLink}}" alt=""></a>  
       </div>
+      <div class="card-body">
+        <h4 class="card-title" style="font-size: 17px;">
+          <a  href="javascript:void(0)" (click) = "onSelect(product)">{{product.productname}}</a>
+        </h4>
+        <h5>${{product.price}}</h5>
+      </div>
+      <button (click) = "onSelect(product)" class="btn btn-primary" style="width: 70%; margin-bottom: 5px; margin-left: 15%;">Xem Thông Tin</button>
       <div class="card-footer">
         <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
       </div>
     </div>
   </div>
 
-  <div class="col-lg-4 col-md-6 mb-4">
+
+
+  <!--Pagination-->
+  <nav aria-label="Page navigation example" style="margin-left: 30%;">
+    <ul class="pagination" >
+      <li class="page-item"><a class="page-link" (click) = "goPreviousPage()">Previous</a></li>
+      <li class="page-item" *ngFor='let in of counter(totalPage) ;let i = index'  
+        (click) = "goToPage(i+1)" [ngClass]="{'active': currentPage == i + 1}">
+        <a class="page-link no">{{i + 1}}</a></li>
+      <li class="page-item"><a class="page-link" (click) = "goNextPage()">Next</a></li>
+    </ul>
+  </nav>
+
+  <!-- <div class="col-lg-4 col-md-6 mb-4">
     <div class="card h-100">
       <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
       <div class="card-body">
@@ -73,9 +91,9 @@
         <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="col-lg-4 col-md-6 mb-4">
+  <!-- <div class="col-lg-4 col-md-6 mb-4">
     <div class="card h-100">
       <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
       <div class="card-body">
@@ -121,9 +139,9 @@
         <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
       </div>
     </div>
-  </div>
+  </div> -->
 
-</div> -->
+<!-- </div> -->
 
 
 
@@ -133,10 +151,13 @@
     <span class = "badge">{{department.id}}</span>{{department.name}}
   </li>
 </ul> -->
-<div *ngFor="let product of ListProduct">
+
+
+<!-- <div *ngFor="let product of ListProduct">
   <h1>ID: {{product.id}} </h1>
   <h1>CategoryId: {{product.catelogId}} </h1>
   <h1>productname: </h1>
   <h1>price: </h1>
   <h1>description: </h1>
-</div>
+</div> -->
+

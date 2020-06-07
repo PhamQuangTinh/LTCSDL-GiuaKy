@@ -40,7 +40,7 @@ import {PageNotFoundComponent} from './pagenotfound/pagenotfound.component'
       { path: 'trangchu', component: TrangChuComponent, children: [
         { path: 'home', component: HomeComponent },
         { path: 'thongtinsanpham/:id',component: SanPhamComponent },
-        { path: 'dathang', component: DatHangComponent, canActivate:[AuthGuard]},
+        { path: 'dathang/:id', component: DatHangComponent, canActivate:[AuthGuard]},
         { path: '', redirectTo: 'home', pathMatch: 'full' },
         { path :'**', component: PageNotFoundComponent},
 

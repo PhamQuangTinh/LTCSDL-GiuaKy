@@ -42,7 +42,6 @@ namespace LTCSDL.BLL
             pro.ProductImgLink = req.ProductImgLink;
             pro.Productname = req.Productname;
             pro.ProductInventory = req.ProductInventory;
-            pro.Discount = req.Discount;
             return _rep.CreateNewProduct(pro);
         }
 

@@ -1,0 +1,17 @@
+.dathang{
+    background: #0a98eb;
+    color: #fff;
+    box-shadow: none;
+    border: 0;
+    text-shadow: none;
+    border-radius: 2px;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: 300;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 20px;
+    margin-bottom: 0;
+    width: 20%;
+
+}

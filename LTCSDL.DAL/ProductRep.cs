@@ -143,7 +143,6 @@ namespace LTCSDL.DAL
                 a.Productcontent,
                 a.ProductInventory,
                 a.ProductImgLink,
-                a.Discount
             }).Where(x => x.CatelogId == catelogId)
             .OrderBy(x => x.Productname)
             .ToList();

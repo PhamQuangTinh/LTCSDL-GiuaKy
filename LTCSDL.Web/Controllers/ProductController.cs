@@ -24,8 +24,7 @@ namespace LTCSDL.Web.Controllers
             _svc = new ProductSvc();
         }
         
-        [HttpGet("find-product-by-id")]
-        [Authorize]
+        [HttpPost("find-product-by-id")]
         public IActionResult FindProductById([FromBody] FindProductByIdReq req)
         {
             var res = new SingleRsp();

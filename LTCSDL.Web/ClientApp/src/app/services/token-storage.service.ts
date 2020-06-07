@@ -8,7 +8,20 @@ const ROLE_KEY = 'role-user';
   providedIn: 'root'
 })
 export class  TokenStorageService {
-
+  user: any = {
+    id: 0,
+    username: "",
+    password: "",
+    roleid: 0,
+    accessToken: "",
+    refreshToken: "",
+    ho: "",
+    ten: "",
+    email: "",
+    sdt: "",
+    role: [],
+    transaction: []
+  }
   constructor() { }
 
   signOut() {
@@ -30,6 +43,9 @@ export class  TokenStorageService {
   }
 
   public getUser() {
+    if(localStorage.getItem(USER_KEY) === null){
+      return this.user;
+    }
     return JSON.parse(localStorage.getItem(USER_KEY));
   }
 

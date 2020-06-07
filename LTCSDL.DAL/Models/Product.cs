@@ -18,7 +18,6 @@ namespace LTCSDL.DAL.Models
         public string Productcontent { get; set; }
         public int ProductInventory { get; set; }
         public string ProductImgLink { get; set; }
-        public decimal? Discount { get; set; }
 
         public virtual Catelog Catelog { get; set; }
         public virtual ICollection<Order> Order { get; set; }

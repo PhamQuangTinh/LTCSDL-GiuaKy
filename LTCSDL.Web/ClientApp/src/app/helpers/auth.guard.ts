@@ -16,7 +16,6 @@ export class AuthGuard implements CanActivate{
             return true;
         else{
             alert("Phải đăng nhập trước khi đặt hàng")
-            this.router.navigateByUrl['/trangchu/home'];
             return false;
         }
         

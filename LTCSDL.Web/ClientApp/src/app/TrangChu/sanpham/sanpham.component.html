@@ -1,30 +1,52 @@
-    <div class="card mt-4">
-      <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
+ 
+ 
+ <div class="card mt-4">
+      
+      <img class="card-img-top img-fluid" src="{{productImfo.productImgLink}}" alt="">
       <div class="card-body">
-        <h3 class="card-title">Product Name</h3>
-        <h4>$24.99</h4>
-        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
+        <h3 class="card-title" style="color: #0366d6;">{{productImfo.productname}}</h3>
+        <h4>${{productImfo.price}}</h4>
+        <p class="card-text">{{productImfo.description}}</p>
         <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
         4.0 stars
       </div>
+      <div>
+        <input style="width: 5%;" height="100%" value="1" type="number" [(ngModel)]="soluongdathang">
+        <button type="button" class="dathang" (click) = (dathang())>Đặt Hàng</button>
+      </div>
+      
     </div>
     <!-- /.card -->
 
+
     <div class="card card-outline-secondary my-4">
       <div class="card-header">
+        <h4 style="color: #0366d6;">DESCRIPTION</h4>
+      </div>
+      <div class="card-body">
+        {{productImfo.productcontent}}
+      </div>
+    </div>
+
+
+    <div class="card card-outline-secondary my-4">
+      <div class="card-header" style="color: #0366d6;">
         Product Reviews
       </div>
       <div class="card-body">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-        <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-        <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-        <hr>
-        <a  class="btn btn-success"   (click) = "DatHang()">Đặt Hàng</a>
+        <div *ngFor = "let comment of listComment">
+          <p>{{comment.commentContent}}</p>
+          <small class="text-muted">Posted by {{comment.userName}} on {{comment.timeComment}}</small>
+          <hr>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1" style="color: #0366d6;">Write your Reviews</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" #titleInput ></textarea>
+        </div>
+        <a  class="btn btn-success" (click) = "CreateComment(titleInput.value)">Comment</a>
       </div>
-      <h3>This is product {{productId}}</h3>
     </div>
+
+
+    <button (click) = "goback()">back</button>

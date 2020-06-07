@@ -14,7 +14,6 @@ namespace LTCSDL.Common.Req
         public string Productcontent { get; set; }
         public int ProductInventory { get; set; }
         public string ProductImgLink { get; set; }
-        public decimal? Discount { get; set; }
 
     }
 }
