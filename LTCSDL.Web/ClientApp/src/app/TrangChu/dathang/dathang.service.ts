@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { type } from './dathang.component';
 
 const API_URL = 'https://localhost:44372/api/Product/';
+const API_URL_BASKET = 'https://localhost:44372/api/Basket/';
+const API_URL_TRANSACTION = 'https://localhost:44372/api/Transaction/'
+
 
 
 const httpOptions = {
@@ -16,29 +20,56 @@ const httpOptions = {
 
   
 export class DatHangService {
-    products: Array<any> = [];
 
     constructor(private http: HttpClient) { }
 
-    findProductByID(proID) : Observable<any>{
-        return this.http.post(API_URL + 'find-product-by-id',
+    findBasketByUserId(userId) : Observable<any>{
+        return this.http.post(API_URL_BASKET  + 'get-basket',
         {
-            productId : proID,
+            userId : userId,
         }, httpOptions);
     }
 
-    saveProducts(product){
-        this.products.push(product);
+    deleteProductInBasket(userId,proId) : Observable<any>{
+        return this.http.post(API_URL_BASKET  + 'delete-product-basket',
+        {
+            userId : userId,
+            proId : proId
+        }, httpOptions);
+    }
+    deleteBasket(userId): Observable<any>{
+        return this.http.post(API_URL_BASKET + 'delete-basket',
+        {
+            userId : userId
+        },httpOptions)
     }
 
-    getProductsAfterOrder(product){
-        this.saveProducts(product);
-        return this.products
+    createNewTransaction(userId , amount, proimfo:type[]) : Observable<any>{
+        return this.http.post(API_URL_TRANSACTION  + 'create-new-transaction-with-many-products',
+        {
+            id: 0,
+            userId: userId,
+            amount: amount,
+            proreq : proimfo
+            
+  
+        }, httpOptions);
     }
+
+    updateBasket(userId,proId,proIvent) : Observable<any>{
+        return this.http.post(API_URL_BASKET + 'update-basket',
+        {
+            userId: userId,
+            proId: proId,
+            proIvent : proIvent
+            
+  
+        }, httpOptions);
+    }
+
     
-    getProductsBeforOrder(){
-        return this.products
-    }
+
+    
 
     
 

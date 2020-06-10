@@ -46,21 +46,35 @@ namespace LTCSDL.BLL
             return res;
         }
 
-        public SingleRsp DeleteTransaction(TransactionReq tranc) 
+        public SingleRsp DeleteTransaction(int userId, int tranId) 
         {
-            Transaction tran = new Transaction();
-            tran.Id = tranc.Id;
-            tran.UserId = tranc.UserId;
-            tran.Amount = tran.Amount;
-            tran.TimeTransaction = tranc.TimeTransaction;
-            return _rep.DeleteTransaction(tran);
+            var res = new SingleRsp();
+            var m = _rep.DeleteTransaction(userId, tranId);
+            res.Data = m;
+            return res;
         }
 
 
 
-        public SingleRsp removeOrderProductsTransction(int tranId, List<ProIDvsProNumReq> array, decimal amount) {
+        public SingleRsp removeOrderProductsTransction(int tranId, List<ProIDvsProNumReq> array) {
             var res = new SingleRsp();
-            var m = _rep.removeOrderProductsTransction(tranId,array,amount);
+            var m = _rep.removeOrderProductsTransction(tranId,array);
+            res.Data = m;
+            return res;
+        }
+
+        public SingleRsp findTransactionByUserIdvsTranId(int userId, int tranID)
+        {
+            var res = new SingleRsp();
+            var m = _rep.findTransactionByUserIdvsTranId(userId, tranID);
+            res.Data = m;
+            return res;
+        }
+
+        public SingleRsp findTransactionByUser(int userId) 
+        {
+            var res = new SingleRsp();
+            var m = _rep.findTransactionByUser(userId);
             res.Data = m;
             return res;
         }

@@ -4,37 +4,36 @@ import {DatHangService} from './dathang.service'
 
 
 
+
 @Component({
   selector: 'app-dat-hang',
   templateUrl: './dathang.component.html',
   styleUrls: ['./dathang.component.css']
 })
+
 export class DatHangComponent implements OnInit{
 
+
   proID: any;
-  
-  
-  products: Array<any> = this.orderService.getProductsBeforOrder();
-  productData: any = {
-    id: 0,
-    catelogId: 0,
+  products: any =[]
+  Amount : any = []
+  userId: number;
+  ProIdvsPronum: type[] = []
+
+  totalAmount:number = 0;
+  BasketData: any = {
+    proid: 0,
+    userid: 0,
     productname: "",
     price: 0,
-    description: "",
-    productcontent: "",
     productInventory: 0,
     productImgLink: "",
-    catelog: null,
-    order: []
+    
+    
   };
 
   ngOnInit(){
-    // this.route.paramMap.subscribe((params : ParamMap)=>
-    // {
-    //   let id = parseInt(params.get('proId'));
-    //   this.proID = id;
 
-    // });
   }
   constructor(
     private router: Router,
@@ -43,26 +42,37 @@ export class DatHangComponent implements OnInit{
   ){
     this.route.paramMap.subscribe((params : ParamMap)=>
     {
-      let id = parseInt(params.get('proId'));
-      this.proID = id;
+      let id = parseInt(params.get('id'));
+      this.userId = id;
 
     });
-    this.findProductByID(this.proID)
 
+    this.FindYourBasket(this.userId);
+    for(var i = 0; i < this.products.length; i++){
+      var product = this.products[i];
+      this.totalAmount += (product.price * product.productInventory)
+    }
   }
   BuyAnotherProduct(){
 
-    this.router.navigate['/trangchu/home'];
+    window.history.go(-2);
     
   }
   
   
-   findProductByID(productID){
-    this.orderService.findProductByID(productID).subscribe(
+  
+   FindYourBasket(userId){
+    this.orderService.findBasketByUserId(userId).subscribe(
       result =>{
         if(result.success && result.data != null){
-          this.productData = result.data;
-          this.products = this.orderService.getProductsAfterOrder(result.data);
+          this.products = result.data;
+          for(var i = 0; i < this.products.length; i++){
+            var product = this.products[i];
+            this.totalAmount += (product.price * product.productInventory)
+            
+            this.ProIdvsPronum.push({proId:product.proid,proNum:product.productInventory})
+            console.log(this.ProIdvsPronum)
+          }
         } 
         else{
           alert("something wrong")
@@ -74,7 +84,65 @@ export class DatHangComponent implements OnInit{
     )
   }
 
+  DeleteProductBasket(product){
+    this.orderService.deleteProductInBasket(product.userid,product.proid).subscribe(
+      result =>{
+        if(result.success && result.data != null){
+            const index: number = this.ProIdvsPronum.indexOf({proId:product.proid,proNum:product.productInventory});
+            window.location.reload();
+            if(index != -1){
+              this.ProIdvsPronum.splice(index,1)
+            }
+            
+            alert("Delete Success")
+          
+        } 
+        else{
+          alert("something wrong")
+        }
+      },
+      err =>{
+          alert(err);
+      }
+    )
+
+  }
+  amount(product){
+    return product.price * product.productInventory
+  }
+
+  getPay(){
+    if(this.products.length > 0){
+      this.orderService.createNewTransaction(this.userId,this.totalAmount,this.ProIdvsPronum).subscribe(
+      
+        result =>{
+          if(result.success && result.data.length > 0){
+              alert("Đặt Hàng Thành Công");
+              this.orderService.deleteBasket(this.userId).subscribe(res=>{}, err=>{});
+              this.products = null;
+              this.router.navigate(['/trangchu'])
+  
+          } 
+          else{
+            alert("something wrong")
+          }
+        },
+        err=>{
+          alert("something wrong")
+        }
+      )
+    }
+    else{
+      alert('khong co san pham nao de dat')
+    }
+    
+  }
 
 
 
+}
+
+export interface type{
+  proId: number;
+  proNum: number;
 }

@@ -15,6 +15,7 @@ namespace LTCSDL.DAL
     public class TransactionRep : GenericRep<MyPhamContext, Transaction>
     {
         #region -- Overrides --
+        private Common common = new Common();
         public override Transaction Read(int id)
         {
             var res = All.FirstOrDefault(x => x.Id == id);
@@ -196,6 +197,7 @@ namespace LTCSDL.DAL
                             ProductId = row["product_id"],
                             Productname = row["productname"],
                             Price = row["price"],
+                            Quantity = row["quantity"]
                         };
 
                         res.Add(x);
@@ -210,7 +212,7 @@ namespace LTCSDL.DAL
         }
 
 
-        public List<object> removeOrderProductsTransction(int tranId, List<ProIDvsProNumReq> array, decimal amount)
+        public List<object> removeOrderProductsTransction(int tranId, List<ProIDvsProNumReq> array)
         {
             List<object> res = new List<object>();
             DataTable myTable = CreateTable();
@@ -230,7 +232,7 @@ namespace LTCSDL.DAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@TranId", tranId);
                 cmd.Parameters.AddWithValue("@Products", myTable);
-                cmd.Parameters.AddWithValue("@amount", amount);
+
                 da.SelectCommand = cmd;
                 da.Fill(ds);
                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
@@ -255,52 +257,120 @@ namespace LTCSDL.DAL
         }
 
 
-        public SingleRsp DeleteTransaction(Transaction tranc)
+        public object DeleteTransaction(int userId,int tranId )
         {
-            var res = new SingleRsp();
-
-            using (var context = new MyPhamContext())
+            object res = null;
+            var cmn = (SqlConnection)Context.Database.GetDbConnection();
+            if (cmn.State == ConnectionState.Closed)
             {
-                using (var tran = context.Database.BeginTransaction())
+                cmn.Open();
+            }
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+                var cmd = cmn.CreateCommand();
+                cmd.CommandText = "DeleteTransactionByUservsTran";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userid", userId);
+                cmd.Parameters.AddWithValue("@tranid", tranId);
+
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
-                    try
+                    DataRow row = ds.Tables[0].Rows[0];
+                    var x = new
                     {
-                        if (!checkExistbyID(tranc.Id))
-                        {
-                            var t = context.Transaction.Remove(tranc);
-                            context.SaveChanges();
-                            tran.Commit();
-                        }
-                        else
-                        {
+                        Id = row["id"],
+                        Ten = row["ten"],
+                        
+                    };
 
-                            res.SetMessage("No Transaction Match");
-                            tran.Rollback();
-                        }
-
-
-                    }
-                    catch (Exception e)
-                    {
-                        tran.Rollback();
-                        res.SetError(e.StackTrace);
-                    }
+                    res = x;
+                
                 }
-
+            }
+            catch (Exception)
+            {
+                res = null;
             }
 
             return res;
         }
 
-        private Boolean checkExistbyID(int Id)
+
+        public List<object> findTransactionByUserIdvsTranId(int userId,int tranID)
         {
-            var id = All.FirstOrDefault(p => p.Id == Id);
-            if (id == null)
+            List<object> res = new List<object>();
+            var cmn = (SqlConnection)Context.Database.GetDbConnection();
+            if (cmn.State == ConnectionState.Closed)
             {
-                return true;
+                cmn.Open();
             }
-            return false;
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+                var cmd = cmn.CreateCommand();
+                cmd.CommandText = "FindTransactionByUserId";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userid", userId);
+                cmd.Parameters.AddWithValue("@tranid", tranID);
+
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        var x = new
+                        {
+                            Ho = row["ho"],
+                            Ten = row["ten"],
+                            TimeTransaction = row["time_transaction"],
+                            Amount = row["amount"],
+                            ProductId = row["product_id"],
+                            Quantity = row["quantity"]
+                        };
+                        res.Add(x);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                res = null;
+            }
+
+            return res;
+
+
         }
+
+        public object findTransactionByUser(int userId)
+        {
+            var res = All.Join(Context.User, a => a.UserId, b => b.Id, (a, b) => new
+            {
+                a.UserId,
+                a.Id,
+                a.TimeTransaction,
+                a.Amount,
+            }).Where(x => x.UserId == userId);
+
+            var data = res.OrderByDescending(x => x.TimeTransaction)
+                .Select(x => new
+                {
+                    Id = x.Id,
+                    TimeTransaction = x.TimeTransaction,
+                    Amount = x.Amount,
+                    UserId = x.UserId,
+
+                });
+            return data;
+
+        }
+
+
 
 
     }

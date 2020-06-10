@@ -87,6 +87,14 @@ namespace LTCSDL.Web.Controllers
             return Ok(res);
         }
 
+        [HttpPost("find-user-by-username")]
+        public IActionResult FindUserByUsername([FromBody]UsernameReq req)
+        {
+            var res = new SingleRsp();
+            res = _svc.findUserByUsername(req.username);
+            return Ok(res);
+        }
+
         [HttpPost("update-user-imformation")]
         public IActionResult UpdateUser([FromBody]CreateNewUserAccountReq req)
         {

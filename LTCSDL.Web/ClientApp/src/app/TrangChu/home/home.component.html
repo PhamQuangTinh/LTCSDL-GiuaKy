@@ -42,8 +42,8 @@
         <h5>${{product.price}}</h5>
       </div>
       <button (click) = "onSelect(product)" class="btn btn-primary" style="width: 70%; margin-bottom: 5px; margin-left: 15%;">Xem Thông Tin</button>
-      <div class="card-footer">
-        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+      <div class="card-footer" style="height: 13%;">
+        <p style='color: #0366d6;'>Còn {{product.productInventory}} sản phẩm</p>
       </div>
     </div>
   </div>

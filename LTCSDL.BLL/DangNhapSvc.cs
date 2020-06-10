@@ -4,6 +4,7 @@ using LTCSDL.Common.Rsp;
 using LTCSDL.DAL;
 using LTCSDL.DAL.Models;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace LTCSDL.BLL
 {
@@ -30,6 +31,13 @@ namespace LTCSDL.BLL
             var res = new SingleRsp();
 
             var m = _rep.Remove(id);
+            res.Data = m;
+            return res;
+        }
+        public SingleRsp findUserByUsername(String userName)
+        {
+            var res = new SingleRsp();
+            var m = _rep.findUserByUsername(userName);
             res.Data = m;
             return res;
         }

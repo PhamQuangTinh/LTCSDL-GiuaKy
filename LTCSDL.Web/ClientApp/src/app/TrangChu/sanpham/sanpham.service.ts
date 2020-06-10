@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 
 const API_URL = 'https://localhost:44372/api/Product/';
 const API_URL_COMMENT = 'https://localhost:44372/api/Comment/';
-const API_URL_TRANSACTION = 'https://localhost:44372/api/Transaction/';
+const API_URL_BASKET = 'https://localhost:44372/api/Basket/';
+
 
 
 const httpOptions = {
@@ -48,18 +49,15 @@ export class ProductService {
         ,httpOptions);
     }
 
-    CreateNewTransaction(userId:number, amount: any,productId:number,productnum:number):Observable<any>{
-        return this.http.post(API_URL_TRANSACTION + 'create-new-transaction-with-many-products',
+    AddProductToBasket(proid,userid,productname,price,productInventory,productImgLink):Observable<any>{
+        return this.http.post(API_URL_BASKET + 'create-product-basket',
         {
-            id:0,
-            userId: userId,
-            amount: amount,
-            proreq: [
-                {
-                    proId : productId,
-                    proNum : productnum,
-                }
-            ]
+            proid: proid,
+            userid: userid,
+            productname: productname,
+            price: price,
+            productInventory: productInventory,
+            productImgLink: productImgLink 
         }
         ,httpOptions);
     }

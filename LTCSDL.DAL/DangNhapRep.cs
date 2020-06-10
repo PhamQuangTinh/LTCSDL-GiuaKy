@@ -40,6 +40,13 @@ namespace LTCSDL.DAL
             return m.Id;
         }
 
+
+        public User findUserByUsername(String username)
+        {
+            var res = All.FirstOrDefault(p => p.Username.Equals(username));
+            return res;
+        }
+
         public User findByUserNameAndPassWord(String username, String password)
         {
             /*var context = new MyPhamContext();

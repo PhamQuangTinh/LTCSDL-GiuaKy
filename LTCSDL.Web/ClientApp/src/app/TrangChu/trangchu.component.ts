@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router,ActivatedRoute,ParamMap } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import {TokenStorageService} from '../services/token-storage.service'
+import {TrangChuService} from './trangchu.service'
 
 declare var $: any;
 
@@ -46,6 +47,16 @@ export class TrangChuComponent implements OnInit {
     password: "",
   }
 
+  formlogout: any ={
+    username: "",
+    password: "",
+    passwordRepeat: "",
+    ho: "",
+    ten: "",
+    email: "",
+    sdt: "",
+  }
+
  
 
   constructor(
@@ -53,7 +64,8 @@ export class TrangChuComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private tokenStorage: TokenStorageService,
-    private router: Router
+    private router: Router,
+    private trangchuService : TrangChuService
   ) {
 
   }
@@ -120,6 +132,8 @@ export class TrangChuComponent implements OnInit {
       $('#loginModal .modal-dialog').removeClass('shake');
     }, 1000);
   }
+
+
   displayreigisterform() {
     this.showRegisterForm();
     setTimeout(function () {
@@ -161,6 +175,7 @@ export class TrangChuComponent implements OnInit {
           var res: any = result;
           //Login success
           if (res.data != null) {
+            window.location.reload()
             this.isLogin = true;
             this.user = res.data; 
             this.tokenStorage.saveUser(res.data)
@@ -169,6 +184,7 @@ export class TrangChuComponent implements OnInit {
             this.tokenStorage.saveRole(res.data.role.code);
             $('#loginModal').modal('hide');
             this.resetLogin();
+            
           } else {
             this.isLogin = false;
             this.loginAjax();
@@ -189,8 +205,109 @@ export class TrangChuComponent implements OnInit {
   logout(){
     this.tokenStorage.signOut();
     this.isLogin = false;
-    this.router.navigate(['']);
+    
+    window.location.reload()
+
+    
   }
+
+  changeProfile(){
+    if(this.isLogin){
+      this.router.navigate(['/trangchu/changeprofile']);
+    }
+    
+  }
+
+  comfirmLogout(){
+    $('#logout').modal('show');
+  }
+
+
+  createAccount(){
+    if(this.formlogout.ho != "" && this.formlogout.ten != "" && this.formlogout.email != "" && this.formlogout.sdt != ""
+         && this.formlogout.password != "" && this.formlogout.passwordRepeat != "" && this.formlogout.username != "" )
+    {
+      var reUser = new RegExp(/^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/)
+      var reEmail = new RegExp(/^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/);
+      var rePhone = new RegExp(/^0{1}[0-9]{8}[0-9]{1}$/);
+
+      if(!reUser.test(this.formlogout.username)){
+        alert("Username không hợp lệ");
+      }
+      else if(!reEmail.test(this.formlogout.email)){
+        alert("Email không hợp lệ");
+      }
+      else if(!rePhone.test(this.formlogout.sdt)){
+        alert("Số điện thoại không hợp lệ")
+      }
+      else if(this.formlogout.password == this.formlogout.passwordRepeat){
+        if(this.formlogout.password < 6) {
+          alert("Mật khẩu phải có tối thiểu 6 ký tự");
+          return false;
+        }
+
+        var re = new RegExp(/[0-9]/)
+        if(!re.test(this.formlogout.password)) {
+          alert("Mật Khẩu nên chưa ít nhất 1 số");
+          return false;
+        }
+        var re = new RegExp(/[a-z]/)
+        if(!re.test( this.formlogout.password)) {
+          alert("Mật Khẩu nên chưa ít nhất 1 ký tự thường");
+          return false;
+        }
+
+        var re = new RegExp(/[A-Z]/)
+        if(!re.test( this.formlogout.password)) {
+          alert("Mật Khẩu nên chưa ít nhất 1 ký tự in hoa");
+          return false;
+        }
+        else{
+          
+          this.trangchuService.findUsername(this.formlogout.username).subscribe(
+            result=>{
+              if(result.success && result.data != null){
+                alert("Đã tồn tại username này")
+              }
+              else{
+                this.trangchuService.CreateUser(this.formlogout).subscribe(
+                  result =>{
+                      alert("success");
+                      this.formlogin.username = this.formlogout.username;
+                      this.formlogin.password = this.formlogout.password;
+                      this.formlogout = {}
+                      $('#logout').modal('hide');
+                      
+                      this.displayloginform();
+                      
+                      
+                  },
+                  err=>{
+                    alert("Something wrong with creating new user")
+                  }
+                )
+              }
+            },
+            err=>{
+              alert("somethign wrong with find username")
+            }
+          )
+          
+        }
+
+      }
+      else{
+        alert("Xác thực mật khẩu không chính xác, hãy kiểm tra lại");
+      }
+    }
+    else{
+      alert("Phải nhập đầy đủ thông tin")
+
+    }
+    $('#logout').modal('hide');
+    
+  }
+
 
 
 

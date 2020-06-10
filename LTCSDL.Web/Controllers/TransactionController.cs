@@ -49,16 +49,33 @@ namespace LTCSDL.Web.Controllers
         public IActionResult RemoveOrderProductsTransction([FromBody] RemoveOrderProductsReq req)
         {
             var res = new SingleRsp();
-            res = _svc.removeOrderProductsTransction(req.TransactionId, req.Proreq, req.Amount);
+            res = _svc.removeOrderProductsTransction(req.TransactionId, req.Proreq);
             return Ok(res);
         }
 
 
         [HttpPost("remove-transaction")]
-        public IActionResult DeleteTransaction([FromBody] TransactionReq req)
+        public IActionResult DeleteTransaction([FromBody] TranIdvsUserIdReq req)
         {
             var res = new SingleRsp();
-            res = _svc.DeleteTransaction(req);
+            res = _svc.DeleteTransaction(req.userId,req.tranId);
+            return Ok(res);
+        }
+
+        [HttpPost("find-transaction-by-user-and-tran")]
+        public IActionResult FindTransactionByUserIdvsTranId([FromBody] TranIdvsUserIdReq req)
+        {
+            var res = new SingleRsp();
+            res = _svc.findTransactionByUserIdvsTranId(req.userId,req.tranId);
+            return Ok(res);
+        }
+
+
+        [HttpPost("find-transaction-by-user")]
+        public IActionResult FindTransactionByUser([FromBody] UserIdReq req)
+        {
+            var res = new SingleRsp();
+            res = _svc.findTransactionByUser(req.UserId);
             return Ok(res);
         }
 

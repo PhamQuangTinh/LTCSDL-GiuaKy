@@ -8,7 +8,6 @@ namespace LTCSDL.Common.Req
     {
         public int Id { get; set; }
         public int TransactionId { get; set; }
-        public decimal Amount { get; set; }
 
         public List<ProIDvsProNumReq> Proreq { get; set; }
     }

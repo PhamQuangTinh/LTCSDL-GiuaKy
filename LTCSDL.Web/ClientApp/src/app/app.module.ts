@@ -17,6 +17,8 @@ import {AdminComponent} from './admin/admin.component';
 import {NewProductComponent} from './admin/new-product/new-product.component'
 import {AuthAdminGuard} from './helpers/auth-admin.guard'
 import {PageNotFoundComponent} from './pagenotfound/pagenotfound.component'
+import{ChangeProfileComponent} from './TrangChu/changeprofile/changeprofile.component'
+import {HistoryTransactionComponent} from './TrangChu/historytransaction/historytransaction.component'
 
 
 @NgModule({
@@ -29,6 +31,8 @@ import {PageNotFoundComponent} from './pagenotfound/pagenotfound.component'
     AdminComponent,
     NewProductComponent,
     PageNotFoundComponent,
+    ChangeProfileComponent,
+    HistoryTransactionComponent
     
     
   ],
@@ -39,7 +43,9 @@ import {PageNotFoundComponent} from './pagenotfound/pagenotfound.component'
     RouterModule.forRoot([
       { path: 'trangchu', component: TrangChuComponent, children: [
         { path: 'home', component: HomeComponent },
+        { path: 'changeprofile', component: ChangeProfileComponent },
         { path: 'thongtinsanpham/:id',component: SanPhamComponent },
+        { path: 'lichsugiaodich', component:HistoryTransactionComponent},
         { path: 'dathang/:id', component: DatHangComponent, canActivate:[AuthGuard]},
         { path: '', redirectTo: 'home', pathMatch: 'full' },
         { path :'**', component: PageNotFoundComponent},

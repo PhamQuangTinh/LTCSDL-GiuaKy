@@ -39,9 +39,10 @@
        </div> 
       </td> 
       <td data-th="Price">{{product.price}}</td> 
-      <td data-th="Quantity"><input class="form-control text-center" value="1" type="number">
-      </td> 
-      <td data-th="Subtotal" class="text-center">{{product.price}}</td> 
+      <td data-th="Price">{{product.productInventory}}</td> 
+
+      <td data-th="Subtotal" class="text-center" >{{amount(product)}}</td>
+      <td><button type="button" class="btn btn-danger" (click) = "DeleteProductBasket(product)">Xóa</button></td> 
      </tr>
 
      
@@ -55,9 +56,9 @@
        <td><a (click)=  "BuyAnotherProduct()" class="btn btn-warning"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a>
        </td> 
        <td colspan="2" class="hidden-xs"> </td> 
-       <td class="hidden-xs text-center"><strong>Tổng tiền 500.000 đ</strong>
+       <td class="hidden-xs text-center" ><strong>{{totalAmount}}</strong>
        </td> 
-       <td><a href="#" class="btn btn-success btn-block">Thanh toán <i class="fa fa-angle-right"></i></a>
+       <td><a href="javascript:void(0)" (click) = "getPay()" class="btn btn-success btn-block">Thanh toán <i class="fa fa-angle-right"></i></a>
        </td> 
       </tr> 
      </tfoot> 
