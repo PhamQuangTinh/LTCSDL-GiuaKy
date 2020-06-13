@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 const API_URL = 'https://localhost:44372/api/DangNhap/';
-
+const API_CATELOG = 'https://localhost:44372/api/Catelog/';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -40,6 +40,20 @@ export class TrangChuService {
         }
         , httpOptions);
     }
+
+    getAllCatelog() : Observable<any>{
+        return this.http.post(API_CATELOG + 'get-all-catelog',httpOptions)
+    }
+
+    getCategoryProduct(categoryId): Observable<any>{
+        return this.http.post(API_CATELOG + 'get-catelog-product',
+        {
+            categoryId : categoryId,
+        }
+        ,httpOptions)
+    }
+
+
 
 
     

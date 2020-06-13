@@ -42,7 +42,27 @@
       <td data-th="Price">{{product.productInventory}}</td> 
 
       <td data-th="Subtotal" class="text-center" >{{amount(product)}}</td>
-      <td><button type="button" class="btn btn-danger" (click) = "DeleteProductBasket(product)">Xóa</button></td> 
+      <td><button type="button" class="btn btn-danger" (click) = "deleteConfirm()">Xóa</button></td> 
+
+      <div class="modal" id ="deleteProductBasket" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Xóa Sản Phẩm</h5>
+            <button type="button" class="close" aria-label="Close" (click)= "closeDeleteProduct()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            <p>Bạn chắc chắc muốn xóa không</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)= "DeleteProductBasket(product)">Xóa</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
      </tr>
 
      
@@ -58,9 +78,31 @@
        <td colspan="2" class="hidden-xs"> </td> 
        <td class="hidden-xs text-center" ><strong>{{totalAmount}}</strong>
        </td> 
-       <td><a href="javascript:void(0)" (click) = "getPay()" class="btn btn-success btn-block">Thanh toán <i class="fa fa-angle-right"></i></a>
+       <td><a href="javascript:void(0)" (click) = "payConfirmation()" class="btn btn-success btn-block">Thanh toán <i class="fa fa-angle-right"></i></a>
        </td> 
       </tr> 
      </tfoot> 
     </table>
    </div>
+
+   <!--Dialog-->
+   <div class="modal" id ="payConfirm" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Xác nhận thanh toán</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Bán Có chắc chắn muốn thanh toán</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)= "getPay()" class="btn btn-primary">Thanh toán</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+

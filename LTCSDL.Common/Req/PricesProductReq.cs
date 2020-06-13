@@ -11,6 +11,10 @@ namespace LTCSDL.Common.Req
 
         public decimal LPrice { get; set; }
 
+        public int page { get; set; }
+
+        public int size { get; set; }
+
 
     }
 }

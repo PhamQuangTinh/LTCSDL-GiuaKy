@@ -1,0 +1,126 @@
+<h1 id="tableLabel">Product</h1>
+
+<p>Quản Lý Sản Phẩm</p>
+
+<p *ngIf="!isSuccess"><em>Loading...</em></p>
+
+<button style="margin-bottom: 10px;" *ngIf="isSuccess" class = "btn btn-sm btn-primary"  (click) = "openModal(false,'')">
+    Thêm Sản Phẩm Mới
+</button>
+<table class='table table-striped' aria-labelledby="tableLabel">
+  <thead>
+    <tr>
+      <th>Mã SP</th>
+      <th>Tên Sản Phẩm</th>
+      <th>Mã Loại SP</th>
+      <th>Tồn Kho</th>
+      <th>Giá</th>
+      <th>Hành Động</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor = "let product of ListProduct" >
+      <td>{{ product.id}}</td>
+      <td>{{ product.productname}}</td>
+      <td>{{ product.catelogId }}</td>
+      <td>{{ product.productInventory }}</td>
+      <td>{{ product.price }}</td>
+      <td>
+        <button class = "btn btn-sm btn-info" (click) = "openModal(true,product)">
+            Sửa
+        </button>
+        <button class = "btn btn-sm btn-danger">
+            Xóa
+        </button>
+       </td>
+    </tr>
+  </tbody>
+</table>
+
+<nav aria-label="Page navigation example" style="margin-left: 30%;">
+    <ul class="pagination" >
+      <li class="page-item"><a class="page-link" (click) = "goPreviousPage()">Previous</a></li>
+      <li class="page-item" *ngFor='let in of counter(totalPage) ;let i = index'  
+        (click) = "goToPage(i+1)" [ngClass]="{'active': currentPage == i + 1}">
+        <a class="page-link no">{{i + 1}}</a></li>
+      <li class="page-item"><a class="page-link" (click) = "goNextPage()">Next</a></li>
+    </ul>
+  </nav>
+
+
+  <!--Add New Product-->
+  <div class="modal fade" id="addNewProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Thêm Mới Sản Phẩm</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            
+            <!-- <hr/> -->
+            <div class="row">
+                <div class = "col-2">
+                    Product ID
+                </div>
+                <div class = "col-2">
+                    <input type="text" class = "form-control" [(ngModel)] = "product.id"/>
+                </div>
+
+                <div class = "col-2">
+                    Product Name
+                </div>
+                <div class = "col-6">
+                    <input type="text" class = "form-control" [(ngModel)] = "product.productname"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class = "col-1">
+                    Price
+                </div>
+                <div class = "col-2">
+                    <input type="text" class = "form-control" [(ngModel)] = "product.price"/>
+                </div>
+
+                <div class = "col-2">
+                    Description
+                </div>
+                <div class = "col-6">
+                    <textarea class = "form-control" [(ngModel)] = "product.productname"></textarea>
+                </div>
+            </div>
+            
+            
+              
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Dialog-->
+  <div class="modal" id ="deleteProdcutTransaction" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title">Xác Nhận</h5>
+        <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        <p>Bạn chắc chắc muốn thêm sản phẩm này không ?</p>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)= "deleteProduct(order)">Xóa</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+    </div>
+</div>

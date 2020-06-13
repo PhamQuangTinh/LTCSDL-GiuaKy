@@ -23,16 +23,37 @@ export class HomeService {
         return this.http.post(API_URL + 'find-all-product', httpOptions);
     }
 
-    pagination(page, size) : Observable<any>{
+    pagination(page, size ,id ,categoryId,keyword,fPrice,lPrice) : Observable<any>{
         return this.http.post(API_URL + "search-product",
         {
             page: page,
             size: size,
-            id: 0,
+            id: id,
+            categoryId : categoryId,
             type: "string",
-            keyword: ""
+            fPrice : fPrice,
+            lPrice : lPrice,
+            keyword: keyword
         },
         httpOptions);
+    }
+    
+
+    // findProductByPrice(fPrice, lPrice,page,size) : Observable<any>{
+    //     return this.http.post(API_URL + "find-product-between-price",
+    //     {
+    //         page: page,
+    //         size: size,
+    //         id: 0,
+    //         categoryId : categoryId,
+    //         type: "string",
+    //         keyword: keyword
+    //     },
+    //     httpOptions);
+    // }
+
+    getTop3Product() : Observable<any>{
+        return this.http.post(API_URL + 'top-product', httpOptions);
     }
 
 

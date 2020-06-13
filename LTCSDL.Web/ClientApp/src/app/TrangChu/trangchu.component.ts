@@ -21,11 +21,15 @@ export class TrangChuComponent implements OnInit {
 
   selectedId: number;
   
+  keyWordSearch : string ="";
+  searchPrice1 : string ="";
+  searchPrice2 : string = "";
   isLogin: boolean = false;
   alert: any = "";
   name: string;
   message: any = "";
   Roles: "";
+  cateLogs: any = [];
 
   user: any = {
     id: 0,
@@ -67,16 +71,17 @@ export class TrangChuComponent implements OnInit {
     private router: Router,
     private trangchuService : TrangChuService
   ) {
-
+    this.getAllCatelog()
   }
   
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
       this.isLogin = true;
       this.user = this.tokenStorage.getUser();
-
       this.Roles = this.tokenStorage.getUser().role.code;  
+      
     }
+
     
   }
 
@@ -206,7 +211,7 @@ export class TrangChuComponent implements OnInit {
     this.tokenStorage.signOut();
     this.isLogin = false;
     
-    window.location.reload()
+    this.router.navigate(['/trangchu'])
 
     
   }
@@ -309,7 +314,36 @@ export class TrangChuComponent implements OnInit {
   }
 
 
+  goToBasket(){
+    this.router.navigate(['/trangchu/dathang',this.user.id])
+  }
 
 
+  getAllCatelog(){
+    this.trangchuService.getAllCatelog().subscribe(
+      res=>{
+        this.cateLogs = res.data;
+      }
+      ,err=>{
+        alert("something wrong")
+      }
+    )
+  }
+
+
+  getCategoryProduct(catelog){
+    this.router.navigate(['/trangchu/home',catelog.id])
+  }
+
+  findProductsbyKeyWord(){
+    this.router.navigate(['/trangchu/home/0',{keyword:this.keyWordSearch}])
+  }
+
+
+  findProductsbyPrice(){
+    this.router.navigate(['/trangchu/home/0',{fPrice:this.searchPrice1, lPrice:this.searchPrice2}])
+  }
 
 }
+
+

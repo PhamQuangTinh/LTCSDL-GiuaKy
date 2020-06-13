@@ -40,6 +40,8 @@ export class HistoryTransactionComponent implements OnInit {
                 }
                 else{
                     alert("Data null")
+                        $('#editTranSaction').modal('hide')
+                        this.findTransactionByUserId(this.user.id)
                 }
             },
             err =>{
@@ -79,12 +81,15 @@ export class HistoryTransactionComponent implements OnInit {
             res =>{
                 if(res.success && res.data != null){
                     this.OrdersTran = res.data;
+                    this.findTransactionByUserId(this.user.id)   
+                    
                 }
                 else{
                     alert("data null")
                 }
             },
             err =>{
+
                 alert("something wrong")
             }
         )
@@ -96,21 +101,22 @@ export class HistoryTransactionComponent implements OnInit {
     deleteProductComfirmation(){
         $('#deleteProdcutTransaction').modal('show')
     }
-    closeDeleteProduct(){
+    closeDeleteProduct(){        
         $('#deleteProdcutTransaction').modal('hide')
+
         
     }
 
     deleteProduct(product){
-        console.log(product.productId, product.quantity, product.id)
         this.ProIdvsPronum.push({proId : product.productId,proNum : product.quantity})
         this.historyTranService.deleteProductOrder(product.id,this.ProIdvsPronum).subscribe(
             res =>{
                 if(res.success && res.data != null)
                 {
                     alert("delete success")
-                    this.editComfirmation(product.id)
-                    $('#editTranSaction').modal('show')
+
+                    $('#deleteProdcutTransaction').modal('hide')
+                    this.editComfirmation(product);
                 }else{
                     alert("data null")
                 }

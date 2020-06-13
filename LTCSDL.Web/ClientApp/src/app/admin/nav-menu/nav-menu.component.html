@@ -1,0 +1,60 @@
+<header>
+    <nav
+      class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+    >
+      <div class="container">
+        <a class="navbar-brand" [routerLink]="['/trangchu']">Trang Chủ</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target=".navbar-collapse"
+          aria-label="Toggle navigation"
+          [attr.aria-expanded]="isExpanded"
+          (click)="toggle()"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
+          [ngClass]="{ show: isExpanded }"
+        >
+          <ul class="navbar-nav flex-grow">
+            <li
+              class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+            </li>
+            <li class="nav-item" style="margin-left: 15px;" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/admin/adminproduct']"
+                >Sản Phẩm</a
+              >
+            </li>
+            <li class="nav-item" style="margin-left: 15px;" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/']"
+                >Loại Sản Phẩm</a
+              >
+            </li>
+            <li class="nav-item" style="margin-left: 15px;" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/']"
+                >Người dùng</a
+              >
+            </li>
+            <li class="nav-item" style="margin-left: 15px;" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/']"
+                >Giao Dịch</a
+              >
+            </li>
+            <li class="nav-item" style="margin-left: 15px;" [routerLinkActive]="['link-active']">
+              <a class="nav-link text-dark" [routerLink]="['/']"
+                >Thống Kê</a
+              >
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>

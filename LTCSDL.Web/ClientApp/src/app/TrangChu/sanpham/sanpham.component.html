@@ -2,7 +2,9 @@
  
  <div class="card mt-4">
       
-      <img class="card-img-top img-fluid" src="{{productImfo.productImgLink}}" alt="">
+      <img class="card-img-top img-fluid" *ngIf ="productImfo.productImgLink != ''" src="{{productImfo.productImgLink}}" alt="">
+      <img class="card-img-top img-fluid" *ngIf ="productImfo.productImgLink == ''" src="http://placehold.it/900x400" alt="">
+
       <div class="card-body">
         <h3 class="card-title" style="color: #0366d6;">{{productImfo.productname}}</h3>
         <h4>${{productImfo.price}}</h4>

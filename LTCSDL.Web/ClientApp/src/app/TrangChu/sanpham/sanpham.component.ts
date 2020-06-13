@@ -141,7 +141,6 @@ export class SanPhamComponent implements OnInit {
                   this.isExistProduct = true;
                   break;
                 }
-                alert(product.productname)
               }
               if (!this.isExistProduct) {
                 this.proService.AddProductToBasket(this.productId, this.userId, this.productImfo.productname

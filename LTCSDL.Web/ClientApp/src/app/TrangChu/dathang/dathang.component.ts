@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {DatHangService} from './dathang.service'
-
+declare var $:any
 
 
 
@@ -111,6 +111,9 @@ export class DatHangComponent implements OnInit{
     return product.price * product.productInventory
   }
 
+  payConfirmation(){
+    $('#payConfirm').modal('show')
+  }
   getPay(){
     if(this.products.length > 0){
       this.orderService.createNewTransaction(this.userId,this.totalAmount,this.ProIdvsPronum).subscribe(
@@ -121,6 +124,7 @@ export class DatHangComponent implements OnInit{
               this.orderService.deleteBasket(this.userId).subscribe(res=>{}, err=>{});
               this.products = null;
               this.router.navigate(['/trangchu'])
+              $('#payConfirm').modal('hide')
   
           } 
           else{
@@ -136,6 +140,10 @@ export class DatHangComponent implements OnInit{
       alert('khong co san pham nao de dat')
     }
     
+  }
+
+  deleteConfirm(){
+    $('#deleteProductBasket').modal('show')
   }
 
 

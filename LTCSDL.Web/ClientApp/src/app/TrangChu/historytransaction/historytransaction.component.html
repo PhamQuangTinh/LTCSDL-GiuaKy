@@ -26,7 +26,8 @@
                         <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h5 class="modal-title">Modal title</h5>
+                            <h5 class="modal-title" *ngIf = "isEdit == 'delete'">Xóa Giao Dịch</h5>
+                            <h5 class="modal-title" *ngIf = "isEdit == 'edit'">Chỉnh Sửa Thông Tin Đặt Hàng</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -51,12 +52,12 @@
     </div>
 </div>  
 
-<!--Xoa Product trong moi transaction-->
+<!--Edit Product trong moi transaction-->
 <div class="modal fade" id="editTranSaction" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Edit Transaction</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Chỉnh Sửa Thông Tin Giao Dịch</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -67,7 +68,7 @@
                 <div class="col-2"><strong>Số Lượng</strong></div>
                 <div class="col-1"><strong>Giá</strong></div>                
                 <div class="col-3"><strong>Thời gian giao dịch</strong> </div>
-                <div class="col-1"><strong>Action</strong> </div>
+                <div class="col-1"><strong>Hành Động</strong> </div>
             </div>
             <hr/>
             <div style="margin-top: 15px;" class="row" *ngFor = "let order of OrdersTran">
@@ -84,7 +85,7 @@
                     <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <h5 class="modal-title">Delete Product</h5>
+                        <h5 class="modal-title">Xóa Sản Phẩm</h5>
                         <button type="button" class="close" aria-label="Close" (click)= "closeDeleteProduct()">
                             <span aria-hidden="true">&times;</span>
                         </button>

@@ -78,10 +78,28 @@ namespace LTCSDL.Web.Controllers
         public IActionResult SearchProduct([FromBody]SearchProductReq req)
         {
             var res = new SingleRsp();
-            var m = _svc.SearchProduct(req.keyword, req.Page, req.Size);
+            var m = new object();
+            if(req.Id == 0)
+            {
+                if (req.categoryId == 0)
+                {
+                    m = _svc.SearchProduct(req.keyword, req.Page, req.Size);
+                }
+                else
+                {
+                    m = _svc.searchProductsByCategory(req.keyword, req.Page, req.Size, req.categoryId);
+                }
+            }
+            else if(req.Id == 1)
+            {
+                m = _svc.findProductBetweenPrice(req.FPrice, req.LPrice, req.Page, req.Size);
+            }
             res.Data = m;
-            return Ok(res );
+
+            return Ok(res);
         }
+
+        
 
         [HttpPost("find-product-by-category")]
         public IActionResult FindProductByCategory([FromBody]CategoryIdReq req)
@@ -96,8 +114,17 @@ namespace LTCSDL.Web.Controllers
         public IActionResult FindProductBetweenPrice([FromBody]PricesProductReq req)
         {
             var res = new SingleRsp();
-            var m = _svc.findProductBetweenPrice(req.FPrice,req.LPrice);
+            var m = _svc.findProductBetweenPrice(req.FPrice,req.LPrice,req.page,req.size);
             res.Data = m;
+            return Ok(res);
+        }
+
+        [HttpPost("top-product")]
+        public IActionResult Top3Product()
+        {
+            var res = new SingleRsp();
+            res = _svc.top3Product();
+            
             return Ok(res);
         }
 

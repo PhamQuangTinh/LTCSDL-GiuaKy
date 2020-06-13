@@ -150,7 +150,30 @@ namespace LTCSDL.DAL
             return data;
         }
 
-        public List<object> findProductBetweenPrice(decimal fPrice, decimal lPrice)
+        public object findProductBetweenPrice(decimal fPrice, decimal lPrice, int page, int size)
+        {
+            var pro = All.Where(x => x.Price >= fPrice && x.Price <= lPrice);
+
+
+            var offset = (page - 1) * size;
+            var total = pro.Count();
+            int totalPage = (total % size) == 0 ? (int)(total / size) : (int)((total / size) + 1);
+            var data = pro.OrderBy(x => x.Price).Skip(offset).Take(size).ToList();
+
+            var res = new
+            {
+                Data = data,
+                TotalRecord = total,
+                TotalPage = totalPage,
+                Page = page,
+                Size = size,
+            };
+
+            return res;
+           
+        }
+
+        public List<object> top3Product()
         {
             List<object> res = new List<object>();
             var cmn = (SqlConnection)Context.Database.GetDbConnection();
@@ -163,10 +186,9 @@ namespace LTCSDL.DAL
                 SqlDataAdapter da = new SqlDataAdapter();
                 DataSet ds = new DataSet();
                 var cmd = cmn.CreateCommand();
-                cmd.CommandText = "timkiemsanphamtheokhoangia";
+                cmd.CommandText = "Top3Product";
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@kg1", fPrice);
-                cmd.Parameters.AddWithValue("@kg2", lPrice);
+
                 da.SelectCommand = cmd;
                 da.Fill(ds);
                 if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
@@ -175,15 +197,9 @@ namespace LTCSDL.DAL
                     {
                         var x = new
                         {
-                            Id = row["id"],
-                            CatelogId = row["catelog_id"],
-                            Productname = row["productname"],
-                            Price = row["price"],
-                            Description = row["description"],
-                            Productcontent = row["productcontent"],
-                            ProductInventory = row["product_inventory"],
+                            Id = row["product_id"],
                             ProductImgLink = row["product_img_link"],
-                            Discount = row["discount"],
+                            rank = row["rank"],
                         };
                         res.Add(x);
                     }
@@ -194,6 +210,29 @@ namespace LTCSDL.DAL
                 res = null;
             }
 
+            return res;
+        }
+
+
+        public object searchProductsByCategory(string keyword,int page, int size, int categoryId)
+        {
+            var pro = All.Where(x => x.Productname.Contains(keyword) && x.CatelogId == categoryId);
+            
+            var offset = (page - 1) * size;
+            var total = pro.Count();
+            int totalPage = (total % size) == 0 ? (int)(total / size) : (int)((total / size) + 1);
+            var data = pro.OrderBy(x => x.Productname).Skip(offset).Take(size).ToList();
+
+            var res = new
+            {
+                Data = data,
+                TotalRecord = total,
+                TotalPage = totalPage,
+                Page = page,
+                Size = size,
+            };
+
+            
             return res;
         }
 
