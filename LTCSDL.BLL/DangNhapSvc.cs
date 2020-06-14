@@ -53,7 +53,7 @@ namespace LTCSDL.BLL
         public SingleRsp CreateNewUser(CreateNewUserAccountReq req) {
             User dn = new User();
             dn.Id = req.Id;
-            dn.Roleid = 2;
+            dn.Roleid = req.Roleid;
             dn.Ho = req.Ho;
             dn.Ten = req.Ten;
             dn.Email = req.Email;
@@ -67,7 +67,7 @@ namespace LTCSDL.BLL
         {
             User dn = new User();
             dn.Id = req.Id;
-            dn.Roleid = 2;
+            dn.Roleid = req.Roleid;
             dn.Ho = req.Ho;
             dn.Ten = req.Ten;
             dn.Email = req.Email;
@@ -81,7 +81,7 @@ namespace LTCSDL.BLL
         {
             User dn = new User();
             dn.Id = req.Id;
-            dn.Roleid = 2;
+            dn.Roleid = req.Roleid;
             dn.Ho = req.Ho;
             dn.Ten = req.Ten;
             dn.Email = req.Email;
@@ -89,6 +89,11 @@ namespace LTCSDL.BLL
             dn.Username = req.Username;
             dn.Password = req.Password;
             return _rep.DeleteUser(dn);
+        }
+
+        public object findUserPagination(int page, int size, string keyword)
+        {
+            return _rep.findUserPagination(page, size,keyword);
         }
 
 

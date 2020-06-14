@@ -33,6 +33,7 @@ export class TrangChuService {
             id: 0,
             username : user.username,
             password : user.password,
+            roleid : 2,
             ho : user.ho,
             ten : user.ten,
             email : user.email,

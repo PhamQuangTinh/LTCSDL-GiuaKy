@@ -3,6 +3,7 @@ using LTCSDL.Common.Req;
 using LTCSDL.Common.Rsp;
 using LTCSDL.DAL;
 using LTCSDL.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
@@ -77,6 +78,21 @@ namespace LTCSDL.BLL
             var m = _rep.findTransactionByUser(userId);
             res.Data = m;
             return res;
+        }
+
+        public object findTransactionPagination(int page, int size)
+        {
+            return _rep.findTransactionPagination(page, size);
+        }
+
+        public object findByDateTransaction(int page, int size, DateTime date)
+        {
+            return _rep.findByDateTransaction(page, size, date);
+        }
+
+        public object StatisticalByDate(int page,int size)
+        {
+            return _rep.StatisticalByDate(page,size);
         }
 
     }

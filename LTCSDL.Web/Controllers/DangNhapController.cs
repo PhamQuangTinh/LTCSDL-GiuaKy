@@ -112,6 +112,18 @@ namespace LTCSDL.Web.Controllers
             return Ok(res);
         }
 
+        [HttpPost("search-user-pagination")]
+
+        public IActionResult searchProductsByCategory([FromBody] UserPaginationReq req)
+        {
+            var res = new SingleRsp();
+            var m  = _svc.findUserPagination(req.page,req.size,req.keyword);
+            res.Data = m;
+            return Ok(res);
+        }
+
+
+
         /*[HttpPost("RefreshToken")]
         public async Task<ActionResult<User>> RefreshToken([FromBody] RefreshRequest refreshRequest)
         {
@@ -128,24 +140,24 @@ namespace LTCSDL.Web.Controllers
             return null;
         }*/
 
-        
 
 
-       /* private bool ValidateRefreshToken(User user, string refreshToken)
-        {
 
-            RefreshToken refreshTokenUser = _context.RefreshToken.Where(rt => rt.Token == refreshToken)
-                                                .OrderByDescending(rt => rt.ExpiryDate)
-                                                .FirstOrDefault();
+        /* private bool ValidateRefreshToken(User user, string refreshToken)
+         {
 
-            if (refreshTokenUser != null && refreshTokenUser.UserId == user.Id
-                && refreshTokenUser.ExpiryDate > DateTime.UtcNow)
-            {
-                return true;
-            }
+             RefreshToken refreshTokenUser = _context.RefreshToken.Where(rt => rt.Token == refreshToken)
+                                                 .OrderByDescending(rt => rt.ExpiryDate)
+                                                 .FirstOrDefault();
 
-            return false;
-        }*/
+             if (refreshTokenUser != null && refreshTokenUser.UserId == user.Id
+                 && refreshTokenUser.ExpiryDate > DateTime.UtcNow)
+             {
+                 return true;
+             }
+
+             return false;
+         }*/
         /*private RefreshToken GenerateRefreshToken()
         {
             RefreshToken refreshToken = new RefreshToken();

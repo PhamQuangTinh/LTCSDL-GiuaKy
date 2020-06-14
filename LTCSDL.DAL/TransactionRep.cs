@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 namespace LTCSDL.DAL
 {
@@ -367,6 +368,78 @@ namespace LTCSDL.DAL
 
                 });
             return data;
+
+        }
+
+        public object findTransactionPagination(int page, int size)
+        {
+            var pro = All.Select(x=>x);
+
+
+            var offset = (page - 1) * size;
+            var total = pro.Count();
+            int totalPage = (total % size) == 0 ? (int)(total / size) : (int)((total / size) + 1);
+            var data = pro.OrderBy(x => x.TimeTransaction).Skip(offset).Take(size).ToList();
+
+            var res = new
+            {
+                Data = data,
+                TotalRecord = total,
+                TotalPage = totalPage,
+                Page = page,
+                Size = size,
+            };
+
+            return res;
+
+        }
+
+        public object findByDateTransaction(int page,int size,DateTime date)
+        {
+            var tran = All.Where(x => x.TimeTransaction == date);
+            
+            var offset = (page - 1) * size;
+            var total = tran.Count();
+            int totalPage = (total % size) == 0 ? (int)(total / size) : (int)((total / size) + 1);
+            var data = tran.OrderBy(x => x.TimeTransaction).Skip(offset).Take(size).ToList();
+
+            var res = new
+            {
+                Data = data,
+                TotalRecord = total,
+                TotalPage = totalPage,
+                Page = page,
+                Size = size,
+            };
+
+            return res;
+        }
+
+        public object StatisticalByDate(int page,int size)
+        {
+            var tran = All.GroupBy(x => x.TimeTransaction)
+                .Select(x => new
+                {
+                    TimeTraction = x.Key,
+                    Total = x.Sum(x => x.Amount)
+                });
+                
+            var offset = (page - 1) * size;
+            var total = tran.Count();
+            int totalPage = (total % size) == 0 ? (int)(total / size) : (int)((total / size) + 1);
+            var data = tran.OrderBy(x => x.TimeTraction).Skip(offset).Take(size).ToList();
+
+            var res = new
+            {
+                Data = data,
+                TotalRecord = total,
+                TotalPage = totalPage,
+                Page = page,
+                Size = size,
+            };
+
+            return res;
+
 
         }
 

@@ -79,6 +79,39 @@ namespace LTCSDL.Web.Controllers
             return Ok(res);
         }
 
+
+
+        [HttpPost("search-transaction-pagination")]
+
+        public IActionResult FindTransactionPagination([FromBody] UserPaginationReq req)
+        {
+
+            var res = new SingleRsp();
+            object m = null;
+            if(req.id == 0)
+            {
+                m = _svc.findTransactionPagination(req.page, req.size);
+
+            }else if(req.id == 1)
+            {
+                m = _svc.findByDateTransaction(req.page, req.size, req.dateTime);
+            }
+            res.Data = m;
+            return Ok(res);
+        }
+
+
+        [HttpPost("Statistical-by-date")]
+        public IActionResult StatisticalByDate([FromBody] UserPaginationReq req)
+        {
+            var res = new SingleRsp();
+            var m = _svc.StatisticalByDate(req.page,req.size);
+            res.Data = m;
+            return Ok(res);
+        }
+
+
+
         public TransactionSvc _svc;
     }
 }

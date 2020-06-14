@@ -48,6 +48,14 @@ namespace LTCSDL.Web.Controllers
             return Ok(res);
         }
 
+        [HttpPost("remove-comment")]
+        public IActionResult RemoveComment([FromBody] CommentReq req)
+        {
+            var res = new SingleRsp();
+            res = _svc.RemoveComment(req);
+            return Ok(res);
+        }
+
 
         private readonly CommentSvc _svc;
     }

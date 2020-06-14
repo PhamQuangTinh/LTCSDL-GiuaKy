@@ -1,4 +1,5 @@
 ﻿using LTCSDL.Common.DAL;
+using LTCSDL.Common.Rsp;
 using LTCSDL.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,113 @@ namespace LTCSDL.DAL
             }).ToList();
 
             return data;
+        }
+
+        public SingleRsp CreateNewCatelog(Catelog cate)
+        {
+            var res = new SingleRsp();
+
+            using (var context = new MyPhamContext())
+            {
+                using (var tran = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                            var t = context.Catelog.Add(cate);
+                            res.Data = cate;
+                            context.SaveChanges();
+                            tran.Commit();
+
+                    }
+                    catch (Exception e)
+                    {
+                        tran.Rollback();
+                        res.SetError(e.StackTrace);
+                    }
+                }
+
+            }
+
+            return res;
+        }
+
+        public SingleRsp UpdateCatelog(Catelog cate)
+        {
+            var res = new SingleRsp();
+
+            using (var context = new MyPhamContext())
+            {
+                using (var tran = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var t = context.Catelog.Update(cate);
+                        res.Data = cate;
+                        context.SaveChanges();
+                        tran.Commit();
+
+                    }
+                    catch (Exception e)
+                    {
+                        tran.Rollback();
+                        res.SetError(e.StackTrace);
+                    }
+                }
+
+            }
+
+            return res;
+        }
+
+        public SingleRsp RemoveCatelog(Catelog cate)
+        {
+            var res = new SingleRsp();
+
+            using (var context = new MyPhamContext())
+            {
+                using (var tran = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var t = context.Catelog.Remove(cate);
+                        res.Data = cate;
+                        context.SaveChanges();
+                        tran.Commit();
+
+                    }
+                    catch (Exception e)
+                    {
+                        tran.Rollback();
+                        res.SetError(e.StackTrace);
+                    }
+                }
+
+            }
+
+            return res;
+        }
+
+        public object findCatelogPagination(int page, int size, string keyword)
+        {
+            var pro = All.Where(x => x.Name.Contains(keyword));
+
+
+            var offset = (page - 1) * size;
+            var total = pro.Count();
+            int totalPage = (total % size) == 0 ? (int)(total / size) : (int)((total / size) + 1);
+            var data = pro.OrderBy(x => x.Id).Skip(offset).Take(size).ToList();
+
+            var res = new
+            {
+                Data = data,
+                TotalRecord = total,
+                TotalPage = totalPage,
+                Page = page,
+                Size = size,
+            };
+
+            return res;
+
         }
     }
 }

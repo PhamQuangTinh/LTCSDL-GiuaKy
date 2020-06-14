@@ -92,6 +92,7 @@ namespace LTCSDL.DAL
                         if (common.checkExistbyUserName(dn.Username))
                         {
                             var t = context.User.Add(dn);
+                            res.Data = dn;
                             context.SaveChanges();
                             tran.Commit();
                         }
@@ -129,6 +130,7 @@ namespace LTCSDL.DAL
                         if (!common.checkExistbyID(dn.Id))
                         {
                             var t = context.User.Update(dn);
+                            res.Data = dn;
                             context.SaveChanges();
                             tran.Commit();
                         }
@@ -164,6 +166,7 @@ namespace LTCSDL.DAL
                         if (!common.checkExistbyID(dn.Id))
                         {
                             var t = context.User.Remove(dn);
+                            res.Data = dn;
                             context.SaveChanges();
                             tran.Commit();
                         }
@@ -190,8 +193,33 @@ namespace LTCSDL.DAL
 
 
 
+        public object findUserPagination(int page, int size, string keyword)
+        {
+            var pro = All.Where(x => x.Username.Contains(keyword)).OrderBy(x => x.Roleid);
 
-        
+
+            var offset = (page - 1) * size;
+            var total = pro.Count();
+            int totalPage = (total % size) == 0 ? (int)(total / size) : (int)((total / size) + 1);
+            var data = pro.OrderBy(x => x.Username).Skip(offset).Take(size).ToList();
+
+            var res = new
+            {
+                Data = data,
+                TotalRecord = total,
+                TotalPage = totalPage,
+                Page = page,
+                Size = size,
+            };
+
+            return res;
+
+        }
+
+
+
+
+
 
         private Common common = new Common();
 

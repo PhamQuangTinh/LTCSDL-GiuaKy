@@ -61,4 +61,18 @@ export class ProductService {
         }
         ,httpOptions);
     }
+
+    RemoveComment(comment):Observable<any>{
+        console.log(comment);
+        return this.http.post(API_URL_COMMENT + 'remove-comment',
+        {
+            id: comment.id,
+            userId: comment.userId,
+            userName: comment.userName,
+            productId: comment.productId,
+            commentContent: comment.commentContent,
+            timeComment: comment.timeComment
+        }
+        ,httpOptions);
+    }
 }

@@ -34,6 +34,39 @@ namespace LTCSDL.Web.Controllers
             return Ok(res);
         }
 
+        [HttpPost("create-new-catelog")]
+        public IActionResult CreateNewCatelog([FromBody] CatelogReq req)
+        {
+            var res = new SingleRsp();
+            res = _svc.CreateNewCatelog(req);
+            return Ok(res);
+        }
+
+        [HttpPost("update-catelog")]
+        public IActionResult UpdateCatelog([FromBody] CatelogReq req)
+        {
+            var res = new SingleRsp();
+            res = _svc.UpdateCatelog(req);
+            return Ok(res);
+        }
+
+        [HttpPost("remove-catelog")]
+        public IActionResult RemoveCatelog([FromBody] CatelogReq req)
+        {
+            var res = new SingleRsp();
+            res = _svc.RemoveCatelog(req);
+            return Ok(res);
+        }
+
+        [HttpPost("find-catelog-pagination")]
+        public IActionResult FindCatelogPagination([FromBody] UserPaginationReq req)
+        {
+            var res = new SingleRsp();
+            var m = _svc.findCatelogPagination(req.page,req.size,req.keyword);
+            res.Data = m;
+            return Ok(res);
+        }
+
         private CatelogSvc _svc;
     }
 }

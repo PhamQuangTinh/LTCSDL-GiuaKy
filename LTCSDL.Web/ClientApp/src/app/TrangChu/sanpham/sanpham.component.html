@@ -8,7 +8,7 @@
       <div class="card-body">
         <h3 class="card-title" style="color: #0366d6;">{{productImfo.productname}}</h3>
         <h4>${{productImfo.price}}</h4>
-        <p class="card-text">{{productImfo.description}}</p>
+        <p class="card-text" [innerHTML] = "productImfo.description"></p>
         <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
         4.0 stars
       </div>
@@ -25,8 +25,9 @@
       <div class="card-header">
         <h4 style="color: #0366d6;">DESCRIPTION</h4>
       </div>
-      <div class="card-body">
-        {{productImfo.productcontent}}
+      <div class="card-body" >
+        <p [innerHTML] = "productImfo.productcontent"></p>
+       
       </div>
     </div>
 
@@ -39,6 +40,9 @@
         <div *ngFor = "let comment of listComment">
           <p>{{comment.commentContent}}</p>
           <small class="text-muted">Posted by {{comment.userName}} on {{comment.timeComment}}</small>
+          <div style="right: 0px;">
+            <button class = "btn btn-sm btn-danger" *ngIf = "role == 'ADMIN'" (click) = "removeComment(comment)">Xóa</button>
+          </div>
           <hr>
         </div>
 

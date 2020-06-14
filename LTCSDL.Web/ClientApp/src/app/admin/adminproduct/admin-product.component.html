@@ -4,7 +4,7 @@
 
 <p *ngIf="!isSuccess"><em>Loading...</em></p>
 
-<button style="margin-bottom: 10px;" *ngIf="isSuccess" class = "btn btn-sm btn-primary"  (click) = "openModal(false,'')">
+<button style="margin-bottom: 10px;" *ngIf="isSuccess" class = "btn btn-sm btn-primary"  (click) = "openModal(false,null)">
     Thêm Sản Phẩm Mới
 </button>
 <table class='table table-striped' aria-labelledby="tableLabel">
@@ -13,7 +13,7 @@
       <th>Mã SP</th>
       <th>Tên Sản Phẩm</th>
       <th>Mã Loại SP</th>
-      <th>Tồn Kho</th>
+      <th>Số Lượng</th>
       <th>Giá</th>
       <th>Hành Động</th>
     </tr>
@@ -30,7 +30,7 @@
         <button class = "btn btn-sm btn-info" (click) = "openModal(true,product)">
             Sửa
         </button>
-        <button class = "btn btn-sm btn-danger">
+        <button class = "btn btn-sm btn-danger" (click) = "deleteconfirm(product)">
             Xóa
         </button>
        </td>
@@ -44,7 +44,7 @@
       <li class="page-item" *ngFor='let in of counter(totalPage) ;let i = index'  
         (click) = "goToPage(i+1)" [ngClass]="{'active': currentPage == i + 1}">
         <a class="page-link no">{{i + 1}}</a></li>
-      <li class="page-item"><a class="page-link" (click) = "goNextPage()">Next</a></li>
+      <li class="page-item"><a class="page-link"  (click) = "goNextPage()">Next</a></li>
     </ul>
   </nav>
 
@@ -54,43 +54,66 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Thêm Mới Sản Phẩm</h5>
+          <h5 class="modal-title" *ngIf = "!isEdit" id="exampleModalLabel">Thêm Mới Sản Phẩm</h5>
+          <h5 class="modal-title" *ngIf = "isEdit" id="exampleModalLabel">Chỉnh Sửa Sản Phẩm</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            
-            <!-- <hr/> -->
+
             <div class="row">
-                <div class = "col-2">
-                    Product ID
+                <div class = "col-1" >
+                    Mã SP
                 </div>
                 <div class = "col-2">
-                    <input type="text" class = "form-control" [(ngModel)] = "product.id"/>
+                    <input type="text" disabled class = "form-control" [(ngModel)] = product.id/>
+                </div>
+               
+                <div class = "col-1">
+                    Tên SP
+                </div>
+                <div class = "col-5">
+                    <input type="text" class = "form-control" [(ngModel)] = "product.productname"/>
                 </div>
 
-                <div class = "col-2">
-                    Product Name
+                <div class = "col-1">
+                    Giá
                 </div>
-                <div class = "col-6">
-                    <input type="text" class = "form-control" [(ngModel)] = "product.productname"/>
+                <div class = "col-2">
+                    <input type="number" class = "form-control" [(ngModel)] = product.price   />
+                </div>
+            </div>
+            <br/>
+
+            <div class="row">
+                <div class = "col-4">
+                    Đường Dẫn Ảnh Sản Phẩm
+                    <input type="text" class = "form-control" [(ngModel)] = "product.productImgLink"/>
+                </div>
+                <div class = "col-4">
+                    Số Lượng Sản Phẩm  
+                    <input type="number" class = "form-control" [(ngModel)] = product.productInventory />
+                </div>
+
+                <div class = "col-4">
+                    Loại Sản Phẩm Sản Phẩm  
+                    <select class = "form-control" [(ngModel)] = product.catelogId >
+                        <option *ngFor = "let cate of ListCatelog" value = {{cate.id}} >{{cate.name}}</option>
+                    </select>
                 </div>
             </div>
 
+            <br/>
             <div class="row">
-                <div class = "col-1">
-                    Price
-                </div>
-                <div class = "col-2">
-                    <input type="text" class = "form-control" [(ngModel)] = "product.price"/>
+                <div class = "col-6">
+                    Product Description
+                    <ckeditor style="min-height: 20px;" [(ngModel)] = "product.description"></ckeditor>
                 </div>
 
-                <div class = "col-2">
-                    Description
-                </div>
                 <div class = "col-6">
-                    <textarea class = "form-control" [(ngModel)] = "product.productname"></textarea>
+                    Product Content
+                    <ckeditor style="min-height: 20px;" [(ngModel)] = "product.productcontent"></ckeditor>
                 </div>
             </div>
             
@@ -98,14 +121,17 @@
               
         </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" *ngIf = "!isEdit" (click) = "editComfirm()">Tạo Mới</button>
+          <button type="button" class="btn btn-info" *ngIf = "isEdit" (click) = "editComfirm()">Sửa</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
         </div>
       </div>
     </div>
   </div>
 
   <!--Dialog-->
-  <div class="modal" id ="deleteProdcutTransaction" tabindex="-1" role="dialog">
+  <div class="modal" id ="editComfirm" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -115,11 +141,39 @@
         </button>
         </div>
         <div class="modal-body">
-        <p>Bạn chắc chắc muốn thêm sản phẩm này không ?</p>
+        <p *ngIf = "!isEdit">Bạn chắc chắc muốn thêm sản phẩm này không ?</p>
+        <p *ngIf = "isEdit">Bạn chắc chắc muốn sửa sản phẩm này không ?</p>
+
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)= "deleteProduct(order)">Xóa</button>
+        <button type="button" class="btn btn-primary" (click) = "editProduct()">Xác Nhận</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+ 
+        </div>
+    </div>
+    </div>
+</div>
+
+
+<!--Xác Nhận Xóa Product-->
+<div class="modal" id ="deleteconfirm" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title">Xác Nhận</h5>
+        <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        <p>Bạn chắc chắc muốn xóa không ?</p>
+
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click) = "deleteProduct()" >Xác Nhận</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
         </div>
     </div>
     </div>

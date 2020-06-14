@@ -16,6 +16,7 @@ export class SanPhamComponent implements OnInit {
   productId: number;
   isLogin: boolean = false;
   userId: number;
+  role: any;
   soluongdathang: number;
   amount: any;
   Basket: any = [];
@@ -61,6 +62,7 @@ export class SanPhamComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private orderService: DatHangService
   ) {
+    this.role = this.tokenStorage.getRole();
 
   }
 
@@ -124,9 +126,24 @@ export class SanPhamComponent implements OnInit {
     }
   }
 
-  goback() {
-    window.history.back();
+  removeComment(comment){
+    this.proService.RemoveComment(comment).subscribe(
+      res => {
+        if (res.success && res.data != null) {
+          alert("Delete success")
+          this.GetCommentProdcut(this.productId);
+        }
+        else {
+          alert("data null")
+        }
+      },
+      err =>{
+        alert("Something wrong");
+      }
+    )
   }
+
+
 
   //Đặt Hàng
   dathang() {

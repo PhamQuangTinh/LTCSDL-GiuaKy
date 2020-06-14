@@ -80,6 +80,7 @@ namespace LTCSDL.DAL
                     try
                     {
                         var t = context.Product.Remove(pro);
+                        res.Data = pro;
                         context.SaveChanges();
                         tran.Commit();
                     }

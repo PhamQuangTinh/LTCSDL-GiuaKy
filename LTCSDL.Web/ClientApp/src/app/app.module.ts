@@ -18,8 +18,11 @@ import{ChangeProfileComponent} from './TrangChu/changeprofile/changeprofile.comp
 import {HistoryTransactionComponent} from './TrangChu/historytransaction/historytransaction.component'
 import {AdminProductComponent} from './admin/adminproduct/admin-product.component'
 import {NavMenuComponent} from './admin/nav-menu/nav-menu.component'
-
-
+import {CKEditorModule } from 'ckeditor4-angular'
+import {AdminCatelogComponent} from  './admin/admin-catelog/admin-catelog.component'
+import {AdminUserComponent} from './admin/admin-user/admin-user.component'
+import {AdminTransactionComponent} from './admin/admin-transaction/admin-transaction.component'
+import {AdminStatisticalComponent} from './admin/statistical/statistical.component'
 
 @NgModule({
   declarations: [
@@ -33,11 +36,17 @@ import {NavMenuComponent} from './admin/nav-menu/nav-menu.component'
     ChangeProfileComponent,
     HistoryTransactionComponent,
     AdminProductComponent,
-    NavMenuComponent
+    NavMenuComponent,
+    AdminCatelogComponent,
+    AdminUserComponent,
+    AdminTransactionComponent,
+    AdminStatisticalComponent
+    
     
     
   ],
   imports: [
+    CKEditorModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
@@ -58,6 +67,14 @@ import {NavMenuComponent} from './admin/nav-menu/nav-menu.component'
         path: 'admin', component: AdminComponent, canActivate:[AuthAdminGuard], children:[
           
           {path:'adminproduct', component: AdminProductComponent},
+          {path:'admincatelog', component: AdminCatelogComponent},
+          {path:'adminuser', component:AdminUserComponent },
+          {path:'admintransaction',component:AdminTransactionComponent},
+          {path: 'statistical', component: AdminStatisticalComponent},
+          {path:'',redirectTo:'adminproduct',pathMatch:'full'},
+          { path :'**', component: PageNotFoundComponent},
+
+
           
         ]
       },

@@ -134,6 +134,35 @@ namespace LTCSDL.DAL
             return res;
         }
 
+        public SingleRsp RemoveComment(Comment cmt)
+        {
+            var res = new SingleRsp();
+
+            using (var context = new MyPhamContext())
+            {
+                using (var tran = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                            var t = context.Comment.Remove(cmt);
+                            res.Data = cmt;
+                            context.SaveChanges();
+                            tran.Commit();
+
+
+                    }
+                    catch (Exception e)
+                    {
+                        tran.Rollback();
+                        res.SetError(e.StackTrace);
+                    }
+                }
+
+            }
+
+            return res;
+        }
+
         public object GetAllCommentProduct(int productId) {
             var data = All.Join(Context.Product, a => a.ProductId, b => b.Id, (a, b) => new
             {

@@ -20,35 +20,36 @@
           [ngClass]="{ show: isExpanded }"
         >
           <ul class="navbar-nav flex-grow">
-            <li
+            <!-- <li
               class="nav-item"
               [routerLinkActive]="['link-active']"
               [routerLinkActiveOptions]="{ exact: true }"
             >
               <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-            </li>
+            </li> -->
             <li class="nav-item" style="margin-left: 15px;" [routerLinkActive]="['link-active']">
               <a class="nav-link text-dark" [routerLink]="['/admin/adminproduct']"
                 >Sản Phẩm</a
               >
             </li>
             <li class="nav-item" style="margin-left: 15px;" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/']"
+              <a class="nav-link text-dark" [routerLink]="['/admin/admincatelog']"
                 >Loại Sản Phẩm</a
               >
             </li>
             <li class="nav-item" style="margin-left: 15px;" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/']"
+              <a class="nav-link text-dark" [routerLink]="['/admin/adminuser']"
                 >Người dùng</a
               >
             </li>
             <li class="nav-item" style="margin-left: 15px;" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/']"
+              <a class="nav-link text-dark" [routerLink]="['/admin/admintransaction']"
                 >Giao Dịch</a
               >
             </li>
+
             <li class="nav-item" style="margin-left: 15px;" [routerLinkActive]="['link-active']">
-              <a class="nav-link text-dark" [routerLink]="['/']"
+              <a class="nav-link text-dark" [routerLink]="['/admin/statistical']"
                 >Thống Kê</a
               >
             </li>

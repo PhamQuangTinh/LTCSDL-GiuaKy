@@ -52,6 +52,19 @@ namespace LTCSDL.BLL
             return res;
         }
 
+        public SingleRsp RemoveComment(CommentReq req)
+        {
+            Comment cmt = new Comment();
+            cmt.Id = req.Id;
+            cmt.UserId = req.UserId;
+            cmt.UserName = req.UserName;
+            cmt.ProductId = req.ProductId;
+            cmt.CommentContent = req.CommentContent;
+            cmt.TimeComment = req.TimeComment;
+            return _rep.RemoveComment(cmt);
+
+        }
+
 
     }
 }

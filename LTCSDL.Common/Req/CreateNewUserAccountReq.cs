@@ -8,6 +8,7 @@ namespace LTCSDL.Common.Req
     public class CreateNewUserAccountReq
     {
         public int Id { get; set; }
+        public int Roleid { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Ho { get; set; }

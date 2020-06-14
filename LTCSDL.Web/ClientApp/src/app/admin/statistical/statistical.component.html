@@ -1,0 +1,41 @@
+<h1 id="tableLabel">Statistical</h1>
+
+<p>Quản Lý Thống Kê</p>
+
+<p *ngIf="!isSuccess"><em>Loading...</em></p>
+
+
+<table class='table table-striped' aria-labelledby="tableLabel">
+  <thead>
+    <tr>
+      <th>Ngày</th>
+      <th>Tổng Tiền</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor = "let tran of ListTransation" >
+      <td>{{ tran.timeTraction}}</td>
+      <td>{{ tran.total}}</td>
+
+
+    </tr>
+  </tbody>
+</table>
+
+<nav aria-label="Page navigation example" style="margin-left: 30%;">
+    <ul class="pagination" >
+      <li class="page-item"><a class="page-link" (click) = "goPreviousPage()">Previous</a></li>
+      <li class="page-item" *ngFor='let in of counter(totalPage) ;let i = index'  
+        (click) = "goToPage(i+1)" [ngClass]="{'active': currentPage == i + 1}">
+        <a class="page-link no">{{i + 1}}</a></li>
+      <li class="page-item"><a class="page-link"  (click) = "goNextPage()">Next</a></li>
+    </ul>
+  </nav>
+
+
+  
+ 
+
+
