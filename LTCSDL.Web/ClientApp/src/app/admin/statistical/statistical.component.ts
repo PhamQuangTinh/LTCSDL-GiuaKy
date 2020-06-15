@@ -41,9 +41,7 @@ export class AdminStatisticalComponent implements OnInit {
 
   goToPage(page){
     
-    this.ObserResult = this.aTransactionService.Statistical(page,PAGE_SIZE);
-    
-    
+    this.ObserResult = this.aTransactionService.Statistical(page,PAGE_SIZE);  
     this.ObserResult.subscribe(
       res =>
       {

@@ -15,6 +15,7 @@ export class HistoryTransactionComponent implements OnInit {
     listTransaction : any = []
     OrdersTran : any = []
     ProIdvsPronum: type[] = []
+
     constructor(
         private historyTranService : HistoryTransactionService,
         private router: Router,
@@ -23,14 +24,15 @@ export class HistoryTransactionComponent implements OnInit {
     )
     {
         this.user = this.token.getUser();
-
     }
 
     ngOnInit(){
         this.findTransactionByUserId(this.user.id)
+        
+        
+        
 
     }
-
     findTransactionByUserId(userId)
     {
         this.historyTranService.findTransactionByUser(userId).subscribe(
@@ -125,6 +127,17 @@ export class HistoryTransactionComponent implements OnInit {
                 alert("something wrong")
             }
         )
+    }
+    
+    checkDate(datetime) : boolean{
+        let currentDate = new Date();
+        let date = new Date(datetime)
+        if((currentDate.getFullYear() == date.getFullYear()) && 
+            (currentDate.getMonth() == date.getMonth()) && (currentDate.getDate() == date.getDate()))
+        {
+            return true;
+        }
+        return false;
     }
 }
 

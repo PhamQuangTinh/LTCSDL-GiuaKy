@@ -427,7 +427,7 @@ namespace LTCSDL.DAL
             var offset = (page - 1) * size;
             var total = tran.Count();
             int totalPage = (total % size) == 0 ? (int)(total / size) : (int)((total / size) + 1);
-            var data = tran.OrderBy(x => x.TimeTraction).Skip(offset).Take(size).ToList();
+            var data = tran.OrderByDescending(x => x.TimeTraction).Skip(offset).Take(size).ToList();
 
             var res = new
             {

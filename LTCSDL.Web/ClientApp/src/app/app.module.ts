@@ -79,7 +79,7 @@ import {AdminStatisticalComponent} from './admin/statistical/statistical.compone
         ]
       },
 
-      { path: '', redirectTo: 'admin', pathMatch: 'full' },
+      { path: '', redirectTo: 'trangchu', pathMatch: 'full' },
       
     ], {enableTracing: true ,onSameUrlNavigation : "reload"}  )
     //enableTracing: gắn id cho url, onSameUrlNavigation: reload lại trang when navigate url
