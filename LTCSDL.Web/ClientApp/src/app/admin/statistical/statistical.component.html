@@ -4,7 +4,11 @@
 
 <p *ngIf="!isSuccess"><em>Loading...</em></p>
 
-
+<p style="margin:0px; padding: 0px;">Từ Ngày</p>
+  <input class="form-control mr-sm-2" [(ngModel)]="date1" type="date" placeholder="Ngày Giao Dịch" aria-label="Search" style="width: 20%; right: 0px;">
+  <p  style="margin:0px; padding: 0px;">Đến</p>
+  <input class="form-control mr-sm-2" [(ngModel)]="date2" type="date" placeholder="Ngày Giao Dịch" aria-label="Search" style="width: 20%; right: 0px;">
+  <button class="btn btn-outline-warning btn-rounded btn-sm my-0" type="submit" (click) = "goToPage(1)">Tìm kiếm</button>
 <table class='table table-striped' aria-labelledby="tableLabel">
   <thead>
     <tr>

@@ -4,7 +4,7 @@ import {Observable} from 'rxjs'
 
 declare var $:any;
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 20;
 
 @Component({
   selector: 'app-admin-product',
@@ -16,6 +16,11 @@ export class AdminProductComponent implements OnInit {
   ListProduct : []
   
   ListCatelog : []
+
+  searchProductName : any;
+
+  categoryId: any = 0;
+
 
   ObserResult : Observable<any>;
 
@@ -46,12 +51,13 @@ export class AdminProductComponent implements OnInit {
   ){}
   
   ngOnInit(){
+    this.searchProductName = ""
     this.goToPage(1);
     this.getAllCatelog();
   }
 
   goToPage(page){
-    this.aProductService.pagination(page,PAGE_SIZE).subscribe(
+    this.aProductService.pagination(page,PAGE_SIZE,0,this.categoryId,this.searchProductName).subscribe(
       res =>
       {
         if(res.success && res.data != null)
@@ -62,6 +68,10 @@ export class AdminProductComponent implements OnInit {
           this.size = res.data.size;
           this.currentPage = page;
           this.isSuccess = true;
+          this.searchProductName ="";
+          this.categoryId = 0;
+          console.log(this.ListProduct)
+          
           
         }else{
           alert("Nothing to Show")
@@ -129,7 +139,6 @@ export class AdminProductComponent implements OnInit {
       res =>{
         if(res.data != null){
           this.ListCatelog = res.data;
-          this.goToPage(1);
         }else{
           alert("data null")
         }
@@ -181,7 +190,7 @@ export class AdminProductComponent implements OnInit {
         if(res.data!= null){
           alert("delete success");
           $('#deleteconfirm').modal('hide')
-          this.goToPage(1)          
+          this.goToPage(this.currentPage)          
 
         }
         else{
@@ -194,7 +203,6 @@ export class AdminProductComponent implements OnInit {
       }
     )
   }
-
 
   
 }

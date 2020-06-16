@@ -16,3 +16,12 @@ C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.Common\obj\Debug\netcoreapp3.1\LTCSDL.C
 C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.Common\obj\Debug\netcoreapp3.1\LTCSDL.Common.AssemblyInfo.cs
 C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.Common\obj\Debug\netcoreapp3.1\LTCSDL.Common.dll
 C:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.Common\obj\Debug\netcoreapp3.1\LTCSDL.Common.pdb
+D:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.Common\bin\Debug\netcoreapp3.1\LTCSDL.Common.deps.json
+D:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.Common\bin\Debug\netcoreapp3.1\LTCSDL.Common.dll
+D:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.Common\bin\Debug\netcoreapp3.1\LTCSDL.Common.pdb
+D:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.Common\obj\Debug\netcoreapp3.1\LTCSDL.Common.csprojAssemblyReference.cache
+D:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.Common\obj\Debug\netcoreapp3.1\LTCSDL.Common.AssemblyInfoInputs.cache
+D:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.Common\obj\Debug\netcoreapp3.1\LTCSDL.Common.AssemblyInfo.cs
+D:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.Common\obj\Debug\netcoreapp3.1\LTCSDL.Common.csproj.CoreCompileInputs.cache
+D:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.Common\obj\Debug\netcoreapp3.1\LTCSDL.Common.dll
+D:\Users\pc\Desktop\LTCSDL-GiuaKy\LTCSDL.Common\obj\Debug\netcoreapp3.1\LTCSDL.Common.pdb

@@ -61,7 +61,8 @@ namespace LTCSDL.DAL
                 a,
                 b,
             }).Where(x => x.a.Username == username && x.a.Password == password).
-            Select(x => new User { 
+            Select(x => new User
+            {
                 Id = x.a.Id,
                 Username = x.a.Username,
                 Password = x.a.Password,
@@ -75,10 +76,10 @@ namespace LTCSDL.DAL
 
             });
             return res.FirstOrDefault();
-            
+
         }
 
-        
+
         public SingleRsp CreateNewUser(User dn)
         {
             var res = new SingleRsp();
@@ -195,7 +196,7 @@ namespace LTCSDL.DAL
 
         public object findUserPagination(int page, int size, string keyword)
         {
-            var pro = All.Where(x => x.Username.Contains(keyword)).OrderBy(x => x.Roleid);
+            var pro = All.Where(x => x.Ho.Contains(keyword) || x.Ten.Contains(keyword)).OrderBy(x => x.Roleid);
 
 
             var offset = (page - 1) * size;

@@ -22,7 +22,7 @@ namespace LTCSDL.BLL
             return res;
         }
 
-        public SingleRsp CreateNewTransaction(int userId, int proId, decimal amount) 
+        public SingleRsp CreateNewTransaction(int userId, int proId, decimal amount)
         {
             var res = new SingleRsp();
             var m = _rep.CreateNewTransaction(userId, proId, amount);
@@ -47,7 +47,7 @@ namespace LTCSDL.BLL
             return res;
         }
 
-        public SingleRsp DeleteTransaction(int userId, int tranId) 
+        public SingleRsp DeleteTransaction(int userId, int tranId)
         {
             var res = new SingleRsp();
             var m = _rep.DeleteTransaction(userId, tranId);
@@ -57,9 +57,10 @@ namespace LTCSDL.BLL
 
 
 
-        public SingleRsp removeOrderProductsTransction(int tranId, List<ProIDvsProNumReq> array) {
+        public SingleRsp removeOrderProductsTransction(int tranId, List<ProIDvsProNumReq> array)
+        {
             var res = new SingleRsp();
-            var m = _rep.removeOrderProductsTransction(tranId,array);
+            var m = _rep.removeOrderProductsTransction(tranId, array);
             res.Data = m;
             return res;
         }
@@ -72,7 +73,7 @@ namespace LTCSDL.BLL
             return res;
         }
 
-        public SingleRsp findTransactionByUser(int userId) 
+        public SingleRsp findTransactionByUser(int userId)
         {
             var res = new SingleRsp();
             var m = _rep.findTransactionByUser(userId);
@@ -85,14 +86,14 @@ namespace LTCSDL.BLL
             return _rep.findTransactionPagination(page, size);
         }
 
-        public object findByDateTransaction(int page, int size, DateTime date)
+        public object findByDateTransaction(int page, int size, DateTime date1, DateTime date2)
         {
-            return _rep.findByDateTransaction(page, size, date);
+            return _rep.findByDateTransaction(page, size, date1, date2);
         }
 
-        public object StatisticalByDate(int page,int size)
+        public object StatisticalByDate(int page, int size, DateTime date1, DateTime date2)
         {
-            return _rep.StatisticalByDate(page,size);
+            return _rep.StatisticalByDate(page, size, date1, date2);
         }
 
     }

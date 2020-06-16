@@ -21,13 +21,14 @@ export class AdminTransactionService {
 
     
 
-    pagination(page, size, id,datetime) : Observable<any>{
+    pagination(page, size, id,datetime1,datetime2) : Observable<any>{
         return this.http.post(API_URL_TRANSACTION + "search-transaction-pagination",
         {
             id : id,
             page: page,
             size: size,
-            dateTime: datetime,
+            dateTime1: datetime1,
+            dateTime2: datetime2,
         },
         httpOptions);
     }
@@ -68,11 +69,14 @@ export class AdminTransactionService {
         ,httpOptions)
     }
 
-    Statistical(page,size) : Observable<any>{
+    Statistical(page,size,datetime1,datetime2) : Observable<any>{
+        console.log(page,size,datetime1,datetime2)
         return this.http.post(API_URL_TRANSACTION + "Statistical-by-date",
         {
             page: page,
-            size : size
+            size : size,
+            dateTime1 : datetime1,
+            dateTime2 : datetime2
         }
         ,httpOptions)
     }

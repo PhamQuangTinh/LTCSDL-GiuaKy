@@ -1,12 +1,12 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { HomeService } from './home.service';
-import { TokenStorageService } from '/Users/pc/Desktop/LTCSDL-GiuaKy/LTCSDL.Web/ClientApp/src/app/services/token-storage.service'
+import {TokenStorageService} from '../services/token-storage.service'
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { Observable } from 'rxjs';
 
 
-const PAGE_SIZE = 3;
+const PAGE_SIZE = 6;
 
 @Component({
   selector: 'app-home',
@@ -180,6 +180,7 @@ export class HomeComponent implements OnInit{
     this.homeservice.getTop3Product().subscribe(
       res => {
         this.Top3Product = res.data
+        console.log(this.Top3Product)
       },
       err => {
         alert("Something wrong");

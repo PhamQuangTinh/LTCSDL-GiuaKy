@@ -22,12 +22,12 @@ export class AdminUserService {
 
     
 
-    pagination(page, size) : Observable<any>{
+    pagination(page, size, keyword) : Observable<any>{
         return this.http.post(API_URL_USER + "search-user-pagination",
         {
             page: page,
             size: size,
-            keyword: ""
+            keyword: keyword
         },
         httpOptions);
     }

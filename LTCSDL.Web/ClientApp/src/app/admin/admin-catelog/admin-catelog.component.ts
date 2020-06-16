@@ -15,6 +15,7 @@ export class AdminCatelogComponent implements OnInit {
 
   ListCatelog : []
 
+  catelogName : any;
 
   ObserResult : Observable<any>;
 
@@ -37,11 +38,12 @@ export class AdminCatelogComponent implements OnInit {
   ){}
   
   ngOnInit(){
+    this.catelogName = "";
     this.goToPage(1);
   }
 
   goToPage(page){
-    this.aProductService.pagination(page,PAGE_SIZE).subscribe(
+    this.aProductService.pagination(page,PAGE_SIZE,this.catelogName).subscribe(
       res =>
       {
         if(res.success && res.data != null)
@@ -53,6 +55,7 @@ export class AdminCatelogComponent implements OnInit {
           this.currentPage = page;
           this.isSuccess = true;
           
+          console.log(this.ListCatelog)
         }else{
           alert("Nothing to Show")
         }
@@ -62,6 +65,7 @@ export class AdminCatelogComponent implements OnInit {
         this.isSuccess = false;
       }
     )
+
   }
 
 

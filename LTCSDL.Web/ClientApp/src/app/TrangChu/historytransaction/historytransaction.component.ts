@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {TokenStorageService} from '/Users/pc/Desktop/LTCSDL-GiuaKy/LTCSDL.Web/ClientApp/src/app/services/token-storage.service'
+import {TokenStorageService} from '../services/token-storage.service'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {HistoryTransactionService} from './historytransaction.service';
 declare var $:any

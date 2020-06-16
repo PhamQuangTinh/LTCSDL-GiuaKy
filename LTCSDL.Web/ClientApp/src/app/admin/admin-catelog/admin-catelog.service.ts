@@ -22,12 +22,12 @@ export class AdminCatelogService {
 
     
 
-    pagination(page, size) : Observable<any>{
+    pagination(page, size, keyword) : Observable<any>{
         return this.http.post(API_URL_CATELOG + "find-catelog-pagination",
         {
             page: page,
             size: size,
-            keyword: ""
+            keyword: keyword
         },
         httpOptions);
     }

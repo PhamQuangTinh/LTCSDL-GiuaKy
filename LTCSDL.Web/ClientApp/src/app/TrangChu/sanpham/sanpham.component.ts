@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from './sanpham.service'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { TokenStorageService } from '/Users/pc/Desktop/LTCSDL-GiuaKy/LTCSDL.Web/ClientApp/src/app/services/token-storage.service'
+import {TokenStorageService} from '../services/token-storage.service'
 import { DatHangService } from '../dathang/dathang.service'
 declare var $: any;
 

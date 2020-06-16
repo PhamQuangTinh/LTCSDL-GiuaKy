@@ -11,6 +11,8 @@ namespace LTCSDL.Common.Req
         public string keyword { get; set; }
         public int id { get; set; }
 
-        public DateTime dateTime { get; set; }
+        public DateTime dateTime1 { get; set; }
+
+        public DateTime dateTime2 { get; set; }
     }
 }

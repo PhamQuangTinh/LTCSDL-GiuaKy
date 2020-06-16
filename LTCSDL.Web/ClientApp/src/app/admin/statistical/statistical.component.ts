@@ -9,11 +9,15 @@ const PAGE_SIZE = 5;
 @Component({
   selector: 'app-admin-statistical',
   templateUrl: './statistical.component.html',
-//   styleUrls: ['./admin-transaction.component.css'],
 })
 export class AdminStatisticalComponent implements OnInit {
 
   ListTransation : []
+
+  date1: Date = new Date("2000-01-01T00:00:00");
+  date2: Date = new Date();
+
+  idAction : number;
 
   ObserResult : Observable<any>;
   isDate : Observable<any>;
@@ -31,7 +35,7 @@ export class AdminStatisticalComponent implements OnInit {
   constructor(
     private aTransactionService :AdminTransactionService,
   ){
-
+      this.idAction = 0;
   }
   
   ngOnInit(){
@@ -41,7 +45,7 @@ export class AdminStatisticalComponent implements OnInit {
 
   goToPage(page){
     
-    this.ObserResult = this.aTransactionService.Statistical(page,PAGE_SIZE);  
+    this.ObserResult = this.aTransactionService.Statistical(page,PAGE_SIZE,this.date1,this.date2);  
     this.ObserResult.subscribe(
       res =>
       {
@@ -53,6 +57,9 @@ export class AdminStatisticalComponent implements OnInit {
           this.size = res.data.size;
           this.currentPage = page;
           this.isSuccess = true;
+
+          
+          console.log(this.ListTransation)
           
         }else{
           alert("Nothing to Show")
@@ -94,12 +101,6 @@ export class AdminStatisticalComponent implements OnInit {
     return new Array(i);
   }
 
-
-
-  findByDateTransaction(idAction){
-
-      this.goToPage(1);
-  }
 
 
   

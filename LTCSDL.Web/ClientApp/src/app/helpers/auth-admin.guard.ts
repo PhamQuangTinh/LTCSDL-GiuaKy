@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core'
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router'
-import { TokenStorageService } from '../services/token-storage.service';
+import { TokenStorageService } from '../TrangChu/services/token-storage.service';
 
 import {Observable} from 'rxjs'
 

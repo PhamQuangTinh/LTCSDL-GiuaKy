@@ -58,7 +58,7 @@ namespace LTCSDL.Web.Controllers
         public IActionResult DeleteTransaction([FromBody] TranIdvsUserIdReq req)
         {
             var res = new SingleRsp();
-            res = _svc.DeleteTransaction(req.userId,req.tranId);
+            res = _svc.DeleteTransaction(req.userId, req.tranId);
             return Ok(res);
         }
 
@@ -66,7 +66,7 @@ namespace LTCSDL.Web.Controllers
         public IActionResult FindTransactionByUserIdvsTranId([FromBody] TranIdvsUserIdReq req)
         {
             var res = new SingleRsp();
-            res = _svc.findTransactionByUserIdvsTranId(req.userId,req.tranId);
+            res = _svc.findTransactionByUserIdvsTranId(req.userId, req.tranId);
             return Ok(res);
         }
 
@@ -88,13 +88,14 @@ namespace LTCSDL.Web.Controllers
 
             var res = new SingleRsp();
             object m = null;
-            if(req.id == 0)
+            if (req.id == 0)
             {
                 m = _svc.findTransactionPagination(req.page, req.size);
 
-            }else if(req.id == 1)
+            }
+            else if (req.id == 1)
             {
-                m = _svc.findByDateTransaction(req.page, req.size, req.dateTime);
+                m = _svc.findByDateTransaction(req.page, req.size, req.dateTime1, req.dateTime2);
             }
             res.Data = m;
             return Ok(res);
@@ -105,7 +106,7 @@ namespace LTCSDL.Web.Controllers
         public IActionResult StatisticalByDate([FromBody] UserPaginationReq req)
         {
             var res = new SingleRsp();
-            var m = _svc.StatisticalByDate(req.page,req.size);
+            var m = _svc.StatisticalByDate(req.page, req.size, req.dateTime1, req.dateTime2);
             res.Data = m;
             return Ok(res);
         }

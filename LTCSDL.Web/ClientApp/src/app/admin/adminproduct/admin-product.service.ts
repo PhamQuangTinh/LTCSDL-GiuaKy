@@ -25,14 +25,15 @@ export class AdminProductService {
         return this.http.post(API_URL_PRODUCT + 'find-all-product', httpOptions);
     }
 
-    pagination(page, size) : Observable<any>{
+    pagination(page, size ,id ,categoryId,keyword) : Observable<any>{
         return this.http.post(API_URL_PRODUCT + "search-product",
         {
             page: page,
             size: size,
-            id: 0,
+            id: id,
+            categoryId : parseInt(categoryId),
             type: "string",
-            keyword: ""
+            keyword: keyword
         },
         httpOptions);
     }

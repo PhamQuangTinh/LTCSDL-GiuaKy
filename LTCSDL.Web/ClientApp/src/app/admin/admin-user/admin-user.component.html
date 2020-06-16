@@ -7,6 +7,14 @@
 <button style="margin-bottom: 10px;" *ngIf="isSuccess" class = "btn btn-sm btn-primary"  (click) = "openModal(false,null)">
   Thêm Người Dùng Mới
 </button>
+
+<div  style="width: 25%;">
+  <input class="form-control mr-sm-2" [(ngModel)] = "searchName"  aria-label="Search" placeholder="Tìm kiếm theo tên họ hoặc tên">
+  <button class="btn btn-outline-warning btn-rounded btn-sm my-0" type="submit" (click) = "goToPage(1)">Tìm kiếm</button>
+</div>
+
+
+
 <table class='table table-striped' aria-labelledby="tableLabel">
   <thead>
     <tr>

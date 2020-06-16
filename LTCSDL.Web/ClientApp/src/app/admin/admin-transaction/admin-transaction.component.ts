@@ -25,7 +25,8 @@ export class AdminTransactionComponent implements OnInit {
   currentPage : number;
   isSuccess : boolean = false;
 
-  dateTransaction: Date = new Date();
+  dateTransaction1: Date = new Date("2000-01-01T00:00:00");
+  dateTransaction2: Date = new Date();
   isEdit : boolean;
   isDelete : boolean = false;
 
@@ -40,14 +41,9 @@ export class AdminTransactionComponent implements OnInit {
 
   }
 
-  goToPage(page){
-    
-    if(this.idAction == 0){
-        this.ObserResult = this.aTransactionService.pagination(page,PAGE_SIZE,0,this.dateTransaction);
-    }else if(this.idAction == 1){
-        this.ObserResult = this.aTransactionService.pagination(page,PAGE_SIZE,1,this.dateTransaction);
-    }
-    
+  goToPage(page){   
+
+    this.ObserResult = this.aTransactionService.pagination(page,PAGE_SIZE,this.idAction,this.dateTransaction1,this.dateTransaction2);    
     this.ObserResult.subscribe(
       res =>
       {
@@ -59,7 +55,7 @@ export class AdminTransactionComponent implements OnInit {
           this.size = res.data.size;
           this.currentPage = page;
           this.isSuccess = true;
-          
+
         }else{
           alert("Nothing to Show")
         }

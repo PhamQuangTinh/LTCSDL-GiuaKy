@@ -17,6 +17,8 @@ export class AdminUserComponent implements OnInit {
   
   ListRole : []
 
+  searchName: any;
+
   ObserResult : Observable<any>;
 
   userT : any ={
@@ -47,12 +49,13 @@ export class AdminUserComponent implements OnInit {
   ){}
   
   ngOnInit(){
+    this.searchName = ""
     this.goToPage(1);
     this.getAllRole();
   }
 
   goToPage(page){
-    this.aUserService.pagination(page,PAGE_SIZE).subscribe(
+    this.aUserService.pagination(page,PAGE_SIZE,this.searchName).subscribe(
       res =>
       {
         if(res.success && res.data != null)

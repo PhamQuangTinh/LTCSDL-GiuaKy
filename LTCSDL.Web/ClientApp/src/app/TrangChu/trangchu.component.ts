@@ -1,8 +1,8 @@
 import { Component,OnInit, Inject, NgModule } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router,ActivatedRoute,ParamMap } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import {TokenStorageService} from '../services/token-storage.service'
+import { AuthService } from './services/auth.service';
+import {TokenStorageService} from './services/token-storage.service'
 import {TrangChuService} from './trangchu.service'
 
 declare var $: any;

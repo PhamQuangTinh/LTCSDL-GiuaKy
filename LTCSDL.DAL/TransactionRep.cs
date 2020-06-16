@@ -258,7 +258,7 @@ namespace LTCSDL.DAL
         }
 
 
-        public object DeleteTransaction(int userId,int tranId )
+        public object DeleteTransaction(int userId, int tranId)
         {
             object res = null;
             var cmn = (SqlConnection)Context.Database.GetDbConnection();
@@ -285,11 +285,11 @@ namespace LTCSDL.DAL
                     {
                         Id = row["id"],
                         Ten = row["ten"],
-                        
+
                     };
 
                     res = x;
-                
+
                 }
             }
             catch (Exception)
@@ -301,7 +301,7 @@ namespace LTCSDL.DAL
         }
 
 
-        public List<object> findTransactionByUserIdvsTranId(int userId,int tranID)
+        public List<object> findTransactionByUserIdvsTranId(int userId, int tranID)
         {
             List<object> res = new List<object>();
             var cmn = (SqlConnection)Context.Database.GetDbConnection();
@@ -373,7 +373,7 @@ namespace LTCSDL.DAL
 
         public object findTransactionPagination(int page, int size)
         {
-            var pro = All.Select(x=>x);
+            var pro = All.Select(x => x);
 
 
             var offset = (page - 1) * size;
@@ -394,10 +394,10 @@ namespace LTCSDL.DAL
 
         }
 
-        public object findByDateTransaction(int page,int size,DateTime date)
+        public object findByDateTransaction(int page, int size, DateTime date1, DateTime date2)
         {
-            var tran = All.Where(x => x.TimeTransaction == date);
-            
+            var tran = All.Where(x => x.TimeTransaction >= date1 && x.TimeTransaction <= date2);
+
             var offset = (page - 1) * size;
             var total = tran.Count();
             int totalPage = (total % size) == 0 ? (int)(total / size) : (int)((total / size) + 1);
@@ -415,15 +415,16 @@ namespace LTCSDL.DAL
             return res;
         }
 
-        public object StatisticalByDate(int page,int size)
+        public object StatisticalByDate(int page, int size, DateTime date1, DateTime date2)
         {
-            var tran = All.GroupBy(x => x.TimeTransaction)
+            var tran = All.Where(x => x.TimeTransaction >= date1 && x.TimeTransaction <= date2).
+                GroupBy(x => x.TimeTransaction)
                 .Select(x => new
                 {
                     TimeTraction = x.Key,
                     Total = x.Sum(x => x.Amount)
                 });
-                
+
             var offset = (page - 1) * size;
             var total = tran.Count();
             int totalPage = (total % size) == 0 ? (int)(total / size) : (int)((total / size) + 1);
