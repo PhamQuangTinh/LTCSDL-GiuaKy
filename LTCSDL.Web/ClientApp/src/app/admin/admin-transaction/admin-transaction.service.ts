@@ -70,7 +70,6 @@ export class AdminTransactionService {
     }
 
     Statistical(page,size,datetime1,datetime2) : Observable<any>{
-        console.log(page,size,datetime1,datetime2)
         return this.http.post(API_URL_TRANSACTION + "Statistical-by-date",
         {
             page: page,

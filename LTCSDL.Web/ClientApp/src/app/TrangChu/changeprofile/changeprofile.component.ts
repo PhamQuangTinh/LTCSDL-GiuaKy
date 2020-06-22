@@ -54,7 +54,7 @@ export class ChangeProfileComponent implements OnInit{
             },
             err=>{
                 alert("something wrong")
-            }
+            } 
         )
     }
 
@@ -97,20 +97,25 @@ export class ChangeProfileComponent implements OnInit{
                     }
 
                     else{
-                        
-                        
+
                         this.changeprofile.updateUser(this.user.id,this.user.username,this.mapUser.newPassword,
                             this.mapUser.ho,this.mapUser.ten,this.mapUser.email,this.mapUser.sdt).subscribe(
                                 res=>{
-
-                                        alert("change success");
-                                        this.UserAfterChangeProfile.ho = this.mapUser.ho;
-                                        this.UserAfterChangeProfile.ten = this.mapUser.ten;
-                                        this.UserAfterChangeProfile.email = this.mapUser.email
-                                        this.UserAfterChangeProfile.newPassword = this.mapUser.newPassword
-                                        this.UserAfterChangeProfile.sdt = this.mapUser.sdt
-                                        this.token.saveUser(this.UserAfterChangeProfile)
-                                        this.router.navigate(['/trangchu/home'])
+                                        if(res.data!=null && res.success)
+                                        {
+                                            alert("change success");
+                                            this.UserAfterChangeProfile.ho = this.mapUser.ho;
+                                            this.UserAfterChangeProfile.ten = this.mapUser.ten;
+                                            this.UserAfterChangeProfile.email = this.mapUser.email
+                                            this.UserAfterChangeProfile.newPassword = this.mapUser.newPassword
+                                            this.UserAfterChangeProfile.sdt = this.mapUser.sdt
+                                            this.token.saveUser(this.UserAfterChangeProfile)
+                                            this.router.navigate(['/trangchu/home/0'])
+                                        }
+                                        else{
+                                            alert("Data null")
+                                        }
+                                        
                                     
                                 },
                                 err=>

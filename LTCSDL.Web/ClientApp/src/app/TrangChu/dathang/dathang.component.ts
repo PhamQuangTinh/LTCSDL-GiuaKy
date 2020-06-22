@@ -48,10 +48,10 @@ export class DatHangComponent implements OnInit{
     });
 
     this.FindYourBasket(this.userId);
-    for(var i = 0; i < this.products.length; i++){
-      var product = this.products[i];
-      this.totalAmount += (product.price * product.productInventory)
-    }
+    // for(var i = 0; i < this.products.length; i++){
+    //   var product = this.products[i];
+    //   this.totalAmount += (product.price * product.productInventory)
+    // }
   }
   BuyAnotherProduct(){
 

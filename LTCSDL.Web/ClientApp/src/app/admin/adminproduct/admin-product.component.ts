@@ -70,7 +70,6 @@ export class AdminProductComponent implements OnInit {
           this.isSuccess = true;
           this.searchProductName ="";
           this.categoryId = 0;
-          console.log(this.ListProduct)
           
           
         }else{

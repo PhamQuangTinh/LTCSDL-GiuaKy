@@ -180,7 +180,6 @@ export class HomeComponent implements OnInit{
     this.homeservice.getTop3Product().subscribe(
       res => {
         this.Top3Product = res.data
-        console.log(this.Top3Product)
       },
       err => {
         alert("Something wrong");

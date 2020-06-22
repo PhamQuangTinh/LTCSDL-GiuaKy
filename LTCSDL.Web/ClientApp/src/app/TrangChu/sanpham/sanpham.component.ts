@@ -17,7 +17,7 @@ export class SanPhamComponent implements OnInit {
   isLogin: boolean = false;
   userId: number;
   role: any;
-  soluongdathang: number;
+  soluongdathang: number = 1;
   amount: any;
   Basket: any = [];
   isExistProduct: boolean = false;

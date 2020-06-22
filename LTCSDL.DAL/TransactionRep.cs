@@ -301,6 +301,7 @@ namespace LTCSDL.DAL
         }
 
 
+        
         public List<object> findTransactionByUserIdvsTranId(int userId, int tranID)
         {
             List<object> res = new List<object>();
@@ -379,7 +380,7 @@ namespace LTCSDL.DAL
             var offset = (page - 1) * size;
             var total = pro.Count();
             int totalPage = (total % size) == 0 ? (int)(total / size) : (int)((total / size) + 1);
-            var data = pro.OrderBy(x => x.TimeTransaction).Skip(offset).Take(size).ToList();
+            var data = pro.OrderByDescending(x => x.TimeTransaction).Skip(offset).Take(size).ToList();
 
             var res = new
             {
@@ -415,7 +416,7 @@ namespace LTCSDL.DAL
             return res;
         }
 
-        public object StatisticalByDate(int page, int size, DateTime date1, DateTime date2)
+        public object StatisticalByDate(int page, int size, DateTime date1, DateTime date2) 
         {
             var tran = All.Where(x => x.TimeTransaction >= date1 && x.TimeTransaction <= date2).
                 GroupBy(x => x.TimeTransaction)

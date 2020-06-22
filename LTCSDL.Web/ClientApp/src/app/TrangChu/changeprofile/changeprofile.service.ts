@@ -34,6 +34,7 @@ export class ChangeProfileService {
         return this.http.post(API_URL  + 'update-user-imformation',
         {      
             id : id,
+            roleid : 2,
             username : username,
             password : password,
             ho : ho,

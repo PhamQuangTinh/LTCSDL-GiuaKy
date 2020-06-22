@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs'
 import {AdminTransactionService} from '../admin-transaction/admin-transaction.service'
+declare var google: any;
 
 declare var $:any;
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 10;
 
 @Component({
   selector: 'app-admin-statistical',
@@ -40,7 +41,6 @@ export class AdminStatisticalComponent implements OnInit {
   
   ngOnInit(){
     this.goToPage(1);
-
   }
 
   goToPage(page){
@@ -57,10 +57,9 @@ export class AdminStatisticalComponent implements OnInit {
           this.size = res.data.size;
           this.currentPage = page;
           this.isSuccess = true;
-
-          
-          console.log(this.ListTransation)
-          
+          console.log(res.data.data)
+          this.drawChart(res.data.data);
+                  
         }else{
           alert("Nothing to Show")
         }
@@ -94,6 +93,31 @@ export class AdminStatisticalComponent implements OnInit {
     else {
       alert("You're being in the last page");
     }
+    
+  }
+
+  drawChart(charData) {
+
+    var arrData = [['Ngày','Doanh Thu']];
+
+    charData.forEach(element => {
+      var item = [];
+      var date = new Date(element.timeTraction);
+      
+      item.push("Ngày " + date.getDate() + " " + "Tháng " + date.getMonth());
+      item.push(element.total);
+      arrData.push(item);
+    });
+    var data = google.visualization.arrayToDataTable(arrData);
+
+    var options = {
+      title: 'Doanh Thu Theo Ngày'
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    chart.draw(data, options);
+
   }
 
 

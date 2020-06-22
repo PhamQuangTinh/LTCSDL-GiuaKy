@@ -232,7 +232,7 @@ export class TrangChuComponent implements OnInit {
     if(this.formlogout.ho != "" && this.formlogout.ten != "" && this.formlogout.email != "" && this.formlogout.sdt != ""
          && this.formlogout.password != "" && this.formlogout.passwordRepeat != "" && this.formlogout.username != "" )
     {
-      var reUser = new RegExp(/^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/)
+      var reUser = new RegExp(/^(?=[a-zA-Z0-9._]{6,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/)
       var reEmail = new RegExp(/^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/);
       var rePhone = new RegExp(/^0{1}[0-9]{8}[0-9]{1}$/);
 
@@ -343,6 +343,8 @@ export class TrangChuComponent implements OnInit {
   findProductsbyPrice(){
     this.router.navigate(['/trangchu/home/0',{fPrice:this.searchPrice1, lPrice:this.searchPrice2}])
   }
+
+  
 
 }
 
